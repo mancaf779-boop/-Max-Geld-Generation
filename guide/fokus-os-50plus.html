@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>FOKUS-OS 50+ — Klar im Kopf. Fokus &amp; Lernen für Frauen ab 50</title>
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --navy: #141c30;
+    --navy-soft: #1b2440;
+    --amber: #e9a23b;
+    --cream: #f4f2ec;
+    --ink: #2b3245;
+    --muted: #6a7186;
+    --rule: #ddd8cc;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "DejaVu Sans", Verdana, sans-serif;
+    color: var(--ink);
+    font-size: 10.5pt;
+    line-height: 1.52;
+  }
+  .page {
+    width: 210mm;
+    min-height: 296mm;
+    padding: 18mm 24mm 20mm 24mm;
+    background: var(--cream);
+    page-break-after: always;
+    position: relative;
+  }
+  .page.dark { background: var(--navy); color: #e8e6df; }
+
+  .brandline { font-family: "DejaVu Sans Mono", monospace; font-size: 8.5pt; letter-spacing: 0.08em; }
+  .brandline .b { color: var(--amber); font-weight: bold; }
+  .brandline .u { color: #7c86a0; }
+
+  .kicker {
+    font-family: "DejaVu Sans Mono", monospace;
+    font-size: 9pt;
+    font-weight: bold;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 3mm;
+  }
+  h1 {
+    font-size: 30pt;
+    line-height: 1.12;
+    font-weight: 800;
+    margin: 2mm 0 6mm 0;
+    color: #fff;
+  }
+  h2 {
+    font-size: 19pt;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--navy);
+    margin: 0 0 4mm 0;
+  }
+  h3 { font-size: 12pt; color: var(--navy); margin: 1.4em 0 0.4em 0; }
+  p { margin: 0 0 0.8em 0; }
+  ul, ol { margin: 0.2em 0 0.9em 1.2em; padding: 0; }
+  li { margin-bottom: 0.3em; }
+
+  .cover-rail { border-left: 2.5pt solid var(--amber); padding-left: 7mm; margin-top: 14mm; }
+  .cover-sub { font-size: 12.5pt; line-height: 1.6; color: #c6c9d4; max-width: 130mm; }
+  .cover-foot {
+    position: absolute; left: 24mm; right: 24mm; bottom: 16mm;
+    border-top: 0.5pt solid #333d58; padding-top: 4mm;
+    font-family: "DejaVu Sans Mono", monospace; font-size: 8.5pt; color: #7c86a0;
+  }
+
+  .num {
+    font-size: 26pt; font-weight: 800; color: var(--amber);
+    float: left; margin: -1mm 5mm 0 0; line-height: 1;
+  }
+  .method { clear: both; margin-bottom: 5.5mm; }
+  .method h3 { margin-top: 0; font-size: 13pt; }
+
+  .action {
+    background: #fbeed3;
+    border-left: 2.5pt solid var(--amber);
+    padding: 3.5mm 5mm;
+    margin: 1em 0 1.4em 0;
+    page-break-inside: avoid;
+  }
+  .action .label {
+    font-family: "DejaVu Sans Mono", monospace;
+    font-size: 8pt; font-weight: bold; letter-spacing: 0.1em;
+    color: #b07417; margin-bottom: 1mm;
+  }
+  .action p { margin: 0; font-weight: bold; color: #4a3a1a; }
+
+  .note {
+    background: #e7ebe7;
+    border-left: 2.5pt solid #5c7a68;
+    padding: 3.5mm 5mm;
+    margin: 1em 0;
+    page-break-inside: avoid;
+  }
+  .note .label {
+    font-family: "DejaVu Sans Mono", monospace;
+    font-size: 8pt; font-weight: bold; letter-spacing: 0.1em;
+    color: #45604f; margin-bottom: 1mm;
+  }
+
+  .footer {
+    position: absolute; left: 24mm; right: 24mm; bottom: 12mm;
+    border-top: 0.5pt solid var(--rule); padding-top: 3mm;
+    display: flex; justify-content: space-between;
+    font-family: "DejaVu Sans Mono", monospace; font-size: 8pt; color: #9a9485;
+  }
+  .small { font-size: 8.5pt; color: var(--muted); }
+  em.hint { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="page dark">
+  <div class="brandline"><span class="b">FOKUS-OS</span><br><span class="u">epubflow.xyz</span></div>
+  <div class="cover-rail">
+    <div class="kicker">Spezial-Guide · Für Frauen ab 50</div>
+    <h1>Klar im Kopf<br>ab 50</h1>
+    <p class="cover-sub">Konzentration und Lernen verändern sich — du bist nicht „zu alt", dein System braucht nur ein Update. Was in den Wechseljahren mit dem Fokus passiert, warum dein Gedächtnis besser ist als sein Ruf, und welche Methoden jetzt wirklich funktionieren.</p>
+  </div>
+  <div class="cover-foot">Ehrlich statt Anti-Aging-Blabla. Konkret statt Kalenderspruch.</div>
+</div>
+
+<!-- ============ VORWORT ============ -->
+<div class="page">
+  <div class="kicker">Kurz vorweg</div>
+  <h2>Dein Kopf ist nicht das Problem.</h2>
+  <p>Vielleicht kennst du das: Du liest eine Seite und weißt am Ende nicht, was drinstand. Du gehst in die Küche und hast vergessen, warum. Du willst dich in etwas Neues einarbeiten — ein Programm, eine Sprache, eine Fortbildung — und fragst dich leise, ob du dafür inzwischen zu alt bist.</p>
+  <p>Hier ist die ehrliche Antwort, und sie ist besser als erwartet: <strong>Dein Gehirn kann bis ins hohe Alter lernen.</strong> Die Forschung ist da eindeutig — neue Verknüpfungen entstehen ein Leben lang. Was sich ab 50 tatsächlich verändert, ist nicht die Fähigkeit zu lernen, sondern die <em>Bedingungen</em> drumherum: Hormone stellen sich um, der Schlaf wird leichter, der Alltag ist oft voller als je zuvor — Job, Eltern, Kinder, alles gleichzeitig.</p>
+  <p>Die meisten Lern-Ratgeber ignorieren das komplett. Sie sind für Studentinnen geschrieben, die nachts um zwei pauken können. Dieser Guide ist es nicht. Er nimmt die fünf Hürden ernst, die ab 50 wirklich im Weg stehen — und zeigt dir zu jeder, was funktioniert.</p>
+  <p>Im zweiten Teil bekommst du die sechs FOKUS-OS-Kernmethoden in der Fassung, die zu deinem Leben passt. Und am Ende einen sanften 14-Tage-Einstieg, der neben einem vollen Alltag machbar ist.</p>
+  <div class="note">
+    <div class="label">EIN EHRLICHES WORT</div>
+    <p>Keine Methode hier ist ein Zaubertrick, und dieser Guide ersetzt keine Ärztin. Er zeigt dir erprobte Techniken, die mit deinem Gehirn arbeiten statt gegen es. Sie wirken, wenn du sie anwendest — lesen allein ändert nichts.</p>
+  </div>
+  <div class="footer"><span>FOKUS-OS 50+ · epubflow.xyz</span><span>1</span></div>
+</div>
+
+<!-- ============ HUERDE 1 ============ -->
+<div class="page">
+  <div class="kicker">Teil 1 — Die fünf Hürden ab 50</div>
+  <h2>Was dir wirklich im Weg steht — und was dagegen wirkt.</h2>
+
+  <div class="method">
+    <div class="num">1</div>
+    <h3>Brain Fog: der Nebel der Wechseljahre</h3>
+    <p>Wortfindungsstörungen, Konzentrationslöcher, das Gefühl von Watte im Kopf — wenn dir das bekannt vorkommt: Es ist real, es ist häufig, und es ist keine Einbildung. Rund zwei Drittel aller Frauen erleben in den Wechseljahren kognitive Veränderungen. Der Grund ist simpel: Östrogen wirkt auch im Gehirn, unter anderem genau dort, wo Aufmerksamkeit und Erinnerung arbeiten. Stellt sich der Spiegel um, ruckelt es vorübergehend.</p>
+    <p>Das Wichtigste zuerst: <strong>Es ist eine Übergangsphase, kein Dauerzustand.</strong> Studien zeigen, dass sich die Denkleistung nach der Umstellung meist wieder stabilisiert. Bis dahin gilt: Arbeite mit dem Nebel, nicht gegen ihn.</p>
+    <ul>
+      <li><strong>Kürzere Runden:</strong> An Nebeltagen sind drei konzentrierte 15-Minuten-Runden mehr wert als eine zähe Stunde.</li>
+      <li><strong>Alles auslagern:</strong> Zettel, Listen, Kalender. Jedes „das merk ich mir schon" ist an Nebeltagen eine Wette, die du verlierst — und verlorene Wetten nagen am Selbstvertrauen.</li>
+      <li><strong>Bewegung wirkt sofort:</strong> Ein zügiger 20-Minuten-Spaziergang verbessert die Durchblutung des Gehirns messbar — oft der schnellste Weg aus dem Nebel.</li>
+    </ul>
+    <div class="action">
+      <div class="label">→ SOFORT UMSETZEN</div>
+      <p>Plane an Nebeltagen nichts um: Verkürze nur die Runden. 15 Minuten Fokus, 5 Minuten Pause am Fenster. Der Stoff bleibt derselbe, die Portionen werden kleiner.</p>
+    </div>
+  </div>
+  <div class="footer"><span>FOKUS-OS 50+ · epubflow.xyz</span><span>2</span></div>
+</div>
+
+<!-- ============ HUERDE 2+3 ============ -->
+<div class="page">
+  <div class="method">
+    <div class="num">2</div>
+    <h3>Schlaf und Energie: dein Lernfenster hat sich verschoben</h3>
+    <p>Nächtliches Aufwachen, Hitzewallungen, frühes Wachwerden: Ab 50 wird der Schlaf bei vielen Frauen leichter und kürzer — und Schlaf ist ausgerechnet der Moment, in dem das Gehirn Gelerntes ins Langzeitgedächtnis sortiert. Schlechte Nacht, schlechter Lerntag: Das ist Biologie, kein Versagen.</p>
+    <p>Die Konsequenz ist nicht „mehr Disziplin", sondern <strong>kluges Timing:</strong></p>
+    <ul>
+      <li><strong>Finde dein Fenster:</strong> Beobachte eine Woche lang, wann dein Kopf am klarsten ist — bei den meisten ist es vormittags. Leg deine wichtigste Lernrunde genau dorthin. Eine gute Runde im richtigen Fenster schlägt drei im falschen.</li>
+      <li><strong>Lerne vor dem Schlafen leicht:</strong> 10 Minuten Wiederholung (nur Abrufen, nichts Neues) direkt vor dem Zubettgehen nutzt die Nacht als Verbündete — was das Gehirn zuletzt gesehen hat, verarbeitet es bevorzugt.</li>
+      <li><strong>Nach schlechten Nächten:</strong> nur wiederholen, nichts Neues. Wiederholung funktioniert auch müde, Neues nicht.</li>
+    </ul>
+    <div class="action">
+      <div class="label">→ SOFORT UMSETZEN</div>
+      <p>Notiere diese Woche jeden Tag kurz: Wann war ich am klarsten? Ab nächster Woche gehört dieses Fenster dir — Termine drumherum, nicht mittenrein.</p>
+    </div>
+  </div>
+
+  <div class="method">
+    <div class="num">3</div>
+    <h3>„Mein Gedächtnis wird schlechter" — die halbe Wahrheit</h3>
+    <p>Ja, das Arbeitsgedächtnis wird ab der Lebensmitte etwas langsamer: Namen, Zahlen, Neues-auf-die-Schnelle. Aber das ist nur die halbe Geschichte. Dein <strong>kristallines Wissen</strong> — Wortschatz, Erfahrung, Urteilsvermögen, das Erkennen von Zusammenhängen — wächst bis weit über 60 hinaus. Du lernst anders als mit 20: weniger auswendig, mehr verstehend. Das ist kein Trostpreis, das ist ein Vorteil.</p>
+    <ul>
+      <li><strong>Verknüpfe statt zu pauken:</strong> Häng Neues an das, was du schon weißt. Je mehr Erfahrung, desto mehr Haken zum Einhängen — deshalb lernen Ältere komplexe Themen oft schneller als Junge.</li>
+      <li><strong>Nimm dir das Tempo-Diktat:</strong> Du brauchst vielleicht einen Durchgang mehr. Na und? Entscheidend ist, was nach vier Wochen noch sitzt — und da gewinnt, wer richtig wiederholt (Methode 5 in Teil 2).</li>
+    </ul>
+    <div class="action">
+      <div class="label">→ SOFORT UMSETZEN</div>
+      <p>Frag dich bei jedem neuen Thema zuerst: „Woran erinnert mich das? Wo habe ich so etwas schon mal erlebt?" Zwei Minuten Verknüpfen sparen zwanzig Minuten Pauken.</p>
+    </div>
+  </div>
+  <div class="footer"><span>FOKUS-OS 50+ · epubflow.xyz</span><span>3</span></div>
+</div>
+
+<!-- ============ HUERDE 4+5 ============ -->
+<div class="page">
+  <div class="method">
+    <div class="num">4</div>
+    <h3>Keine Zeit: die Sandwich-Jahre</h3>
+    <p>Beruf, vielleicht noch Kinder im Haus, zunehmend die eigenen Eltern, dazu der ganze unsichtbare Rest — Frauen ab 50 stemmen oft mehr Verantwortung als je zuvor. „Lern doch abends zwei Stunden" ist da blanker Hohn.</p>
+    <p>Die gute Nachricht: Für echtes Lernen brauchst du keine zwei Stunden. <strong>Drei ehrliche 15-Minuten-Runden über den Tag verteilt schlagen eine erschöpfte Abendstunde</strong> — das Gehirn liebt verteiltes Lernen sogar mehr als Blöcke.</p>
+    <ul>
+      <li><strong>Koppel Lernen an Bestehendes:</strong> nach dem Morgenkaffee, im Wartezimmer, während die Kartoffeln kochen. Feste Anker schlagen gute Vorsätze.</li>
+      <li><strong>Definiere Mini-Portionen:</strong> Zerlege den Stoff vorher in 15-Minuten-Häppchen (Ein-Zettel-Plan, Teil 2). Dann kostet der Start keine Entscheidung mehr.</li>
+      <li><strong>Sag es laut:</strong> „Von 9 bis 9:20 bin ich nicht ansprechbar." Wer immer verfügbar ist, wird immer unterbrochen — das ist keine Charakterfrage, sondern Statistik.</li>
+    </ul>
+    <div class="action">
+      <div class="label">→ SOFORT UMSETZEN</div>
+      <p>Such dir einen festen Anker im Tag (z. B. direkt nach dem Frühstück) und häng eine 15-Minuten-Runde dran. Jeden Tag dieselbe Stelle — nach zwei Wochen läuft es von allein.</p>
+    </div>
+  </div>
+
+  <div class="method">
+    <div class="num">5</div>
+    <h3>Der leise Satz „Dafür bin ich zu alt"</h3>
+    <p>Die größte Lernbremse ab 50 ist selten das Gehirn — es ist dieser Satz. Er kostet dich mehr Konzentration als jede Hitzewallung, weil er bei jedem Fehler mitliest: „Siehst du, es stimmt." Psychologen nennen das Stereotype-Bedrohung: Allein die <em>Angst</em>, das Klischee zu bestätigen, verschlechtert messbar die Leistung.</p>
+    <ul>
+      <li><strong>Fehler heißen ab jetzt Daten:</strong> Eine Lücke beim Abrufen ist keine Diagnose, sondern eine Information: „Das hier nochmal." Mehr nicht.</li>
+      <li><strong>Vergleich dich mit dir:</strong> Nicht mit der 25-Jährigen im Kurs, sondern mit dir vor vier Wochen. Das ist der einzige Vergleich, der etwas aussagt.</li>
+      <li><strong>Führ ein Gewonnen-Heft:</strong> Jeden Lerntag eine Zeile: Was kann ich jetzt, was ich vorher nicht konnte? An Zweifel-Tagen ist dieses Heft Gold wert.</li>
+    </ul>
+    <div class="action">
+      <div class="label">→ SOFORT UMSETZEN</div>
+      <p>Leg heute das Gewonnen-Heft an: ein kleines Notizbuch, eine Zeile pro Lerntag. Erste Zeile heute: „Ich habe angefangen."</p>
+    </div>
+  </div>
+  <div class="footer"><span>FOKUS-OS 50+ · epubflow.xyz</span><span>4</span></div>
+</div>
+
+<!-- ============ TEIL 2 ============ -->
+<div class="page">
+  <div class="kicker">Teil 2 — Das System</div>
+  <h2>Die sechs FOKUS-OS-Methoden in der 50+-Fassung.</h2>
+  <p>Das Fundament bleibt: anfangen, drinbleiben, behalten. Hier ist jede Methode in der Variante, die zu Hormonen, Schlaf und vollem Kalender passt.</p>
+
+  <div class="method">
+    <div class="num">1</div>
+    <h3>Der 15-Minuten-Start <em class="hint">(statt 25)</em></h3>
+    <p>Die größte Hürde ist das Anfangen — das ändert sich nie. Stell den Timer auf 15 Minuten statt 25: klein genug, dass der Kopf nicht streikt, kurz genug für jedes Zeitfenster und jeden Nebeltag. Danach 5 Minuten echte Pause, weg vom Platz. Läuft es gut, häng eine zweite Runde dran — aber erst nach der Pause. An klaren Tagen darfst du auf 25 Minuten hochgehen.</p>
+  </div>
+
+  <div class="method">
+    <div class="num">2</div>
+    <h3>Der 90-Sekunden-Reset</h3>
+    <p>Wenn die Konzentration kippt (du liest denselben Satz zum dritten Mal), nicht durchquälen: aufstehen, ans Fenster, tief atmen, Blick in die Ferne, Schultern lösen. 90 Sekunden, ohne Handy. Ab 50 doppelt wichtig: Der Reset entlastet auch die Augen, die bei Bildschirm- und Kleingedrucktem-Arbeit schneller ermüden. Gönn ihnen die Ferne.</p>
+  </div>
+
+  <div class="method">
+    <div class="num">3</div>
+    <h3>Das Handy raus — und die Gedanken auf den Zettel</h3>
+    <p>Das Handy kommt für jede Runde in einen anderen Raum, nicht nur auf lautlos. Und weil dich ab 50 seltener Instagram und öfter die eigene Gedankenliste unterbricht („Mama anrufen! Überweisung!"): Leg einen <strong>Später-Zettel</strong> neben dich. Jeder aufpoppende Gedanke wandert mit einem Stichwort dorthin — er ist gesichert, der Kopf lässt los, du bleibst in der Runde.</p>
+  </div>
+
+  <div class="method">
+    <div class="num">4</div>
+    <h3>Zuklappen und aufsagen <em class="hint">(Active Recall)</em></h3>
+    <p>Wiederlesen fühlt sich vertraut an und bringt fast nichts — Vertrautheit ist kein Wissen. Was bleibt, ist das Abrufen: Abschnitt lesen, zuklappen, mit eigenen Worten laut aufsagen oder aufschreiben. Gerade bei nachlassendem Arbeitsgedächtnis ist das der große Ausgleicher: Was du einmal selbst formuliert hast, sitzt tiefer als fünfmal Gelesenes. Lücken sind kein Alarmsignal, sondern deine To-do-Liste.</p>
+  </div>
+  <div class="footer"><span>FOKUS-OS 50+ · epubflow.xyz</span><span>5</span></div>
+</div>
+
+<!-- ============ TEIL 2b + 14 Tage ============ -->
+<div class="page">
+  <div class="method">
+    <div class="num">5</div>
+    <h3>Der Wiederhol-Rhythmus <em class="hint">(Spaced Repetition)</em></h3>
+    <p>Der beste Freund des reifen Gedächtnisses. Statt alles auf einmal: heute lernen, morgen kurz abrufen, dann Tag 3, Tag 7, Tag 14. Jede Wiederholung nur 5–10 Minuten, immer per Abrufen. Der Rhythmus gleicht genau das aus, was ab 50 schwächer wird (das schnelle Einprägen), und nutzt, was stark bleibt (das Vertiefen). Trag die Termine in den Kalender ein wie Zahnarzttermine — dann finden sie statt.</p>
+  </div>
+
+  <div class="method">
+    <div class="num">6</div>
+    <h3>Der Ein-Zettel-Plan</h3>
+    <p>„Ich muss noch so viel schaffen" ist kein Plan, sondern ein Stresszustand. Ein Blatt Papier: Was muss bis wann sitzen? Stoff in 15-Minuten-Portionen zerlegen, auf die Tage verteilen, Wiederhol-Termine gleich mit eintragen. Das Chaos wandert aus dem Kopf aufs Papier — dort kann es dich nicht mehr lähmen. Kein App-Schnickschnack: Ein Zettel am Kühlschrank schlägt jedes Tool, das du erst suchen musst.</p>
+  </div>
+
+  <div class="kicker" style="margin-top: 8mm;">Teil 3 — Der Einstieg</div>
+  <h2>Dein sanfter 14-Tage-Start.</h2>
+  <p><strong>Woche 1 — Fokus finden:</strong></p>
+  <ul>
+    <li>Tag 1–2: Klarheits-Fenster beobachten und notieren. Gewonnen-Heft anlegen.</li>
+    <li>Tag 3–4: Erste 15-Minuten-Runde im besten Fenster. Handy raus, Später-Zettel daneben.</li>
+    <li>Tag 5–7: Jeden Tag eine Runde am festen Anker. Bei Durchhängern: 90-Sekunden-Reset statt Durchquälen.</li>
+  </ul>
+  <p><strong>Woche 2 — Behalten lernen:</strong></p>
+  <ul>
+    <li>Tag 8–9: Zuklappen und aufsagen in jede Runde einbauen.</li>
+    <li>Tag 10–11: Ein-Zettel-Plan für dein aktuelles Lernziel schreiben, Wiederhol-Termine eintragen.</li>
+    <li>Tag 12–14: Rhythmus laufen lassen. Am Tag 14: Gewonnen-Heft lesen — schwarz auf weiß, was zwei Wochen gebracht haben.</li>
+  </ul>
+  <div class="action">
+    <div class="label">→ DIE EINZIGE REGEL</div>
+    <p>Ein schlechter Tag ist kein gescheiterter Plan. Runde ausgefallen? Morgen weiter, ohne Nachholen, ohne Schuldgefühl. Dranbleiben schlägt Perfektion — immer.</p>
+  </div>
+  <div class="footer"><span>FOKUS-OS 50+ · epubflow.xyz</span><span>6</span></div>
+</div>
+
+<!-- ============ ABSCHLUSS ============ -->
+<div class="page">
+  <div class="kicker">Gut zu wissen</div>
+  <h2>Wann du den Nebel abklären lassen solltest.</h2>
+  <p>Brain Fog in den Wechseljahren ist häufig und meist harmlos. Trotzdem gehören manche Signale in ärztliche Hände — nicht aus Alarmismus, sondern weil einige gut behandelbare Ursachen (Schilddrüse, Eisenmangel, Vitamin B12, Schlafapnoe, Depression, Nebenwirkungen von Medikamenten) ganz ähnlich aussehen:</p>
+  <ul>
+    <li>Die Aussetzer werden über Monate stetig mehr statt weniger.</li>
+    <li>Du verirrst dich an vertrauten Orten oder verlierst den Faden in vertrauten Tätigkeiten.</li>
+    <li>Menschen aus deinem Umfeld sprechen dich von sich aus darauf an.</li>
+    <li>Dazu kommen anhaltende Erschöpfung, gedrückte Stimmung oder starke Schlafprobleme.</li>
+  </ul>
+  <p>Sprich in diesen Fällen mit deiner Hausärztin oder Gynäkologin. Auch zur Frage, was in den Wechseljahren individuell helfen kann, ist das ärztliche Gespräch der richtige Ort — dieser Guide gibt Lernstrategien, keine medizinischen Empfehlungen.</p>
+
+  <div class="kicker" style="margin-top: 10mm;">Zum Schluss</div>
+  <h2>Du lernst nicht schlechter. Du lernst anders.</h2>
+  <p>Mit mehr Haken zum Einhängen, mehr Urteilsvermögen und — wenn du dieses System nutzt — mit besserer Technik als die meisten 20-Jährigen. Der Rest ist Anwendung: eine 15-Minuten-Runde nach der anderen.</p>
+  <div class="note">
+    <div class="label">MERKE</div>
+    <p>Wenn du tiefer einsteigen willst: Das komplette FOKUS-OS mit allen Methoden, Vorlagen und dem 30-Tage-Plan findest du auf epubflow.xyz. Als Leserin dieses Guides bekommst du den Einführungspreis — den Link findest du in der E-Mail zu diesem PDF.</p>
+  </div>
+  <p class="small" style="margin-top: 10mm;">Dieser Guide dient der allgemeinen Information über Lern- und Konzentrationstechniken. Er ist keine medizinische, psychologische oder therapeutische Beratung und ersetzt keine ärztliche Abklärung. Erprobte Lernmethoden, keine Erfolgsgarantie — die Wirkung hängt von der Anwendung ab. © 2026 FOKUS-OS · epubflow.xyz · Alle Rechte vorbehalten. Weitergabe oder Verkauf ohne Zustimmung nicht gestattet.</p>
+  <div class="footer"><span>FOKUS-OS 50+ · epubflow.xyz</span><span>7</span></div>
+</div>
+
+</body>
+</html>
