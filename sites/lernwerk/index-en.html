@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Focus Better & Study Effectively – Free Focus Guide (PDF) | Lernwerk</title>
+<meta name="description" content="Learn how to focus better and study effectively: this free PDF guide gives you 5 proven study techniques to improve concentration while studying – without endless cramming.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#151B2E;
+    --night-soft:#1E2740;
+    --paper:#F5F3EE;
+    --amber:#E8A13A;
+    --slate:#5A6479;
+    --sage:#7A9B8E;
+    --line:rgba(245,243,238,.12);
+    --display:'Fraunces',Georgia,serif;
+    --body:'Inter',system-ui,sans-serif;
+    --mono:'Space Mono',monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--night);
+    color:var(--paper);
+    font-family:var(--body);
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  a{color:inherit}
+
+  .hero{position:relative;min-height:100vh;display:flex;align-items:center;padding:80px 0 60px;overflow:hidden}
+  .noise-field{position:absolute;inset:0;z-index:0;pointer-events:none}
+  .noise-field span{
+    position:absolute;width:6px;height:6px;border-radius:1px;
+    background:var(--slate);opacity:0;
+    animation:gather 2.6s cubic-bezier(.22,1,.36,1) forwards;
+  }
+  .focus-line{
+    position:absolute;left:50%;top:0;width:2px;height:0;
+    background:linear-gradient(180deg,transparent,var(--amber) 30%,var(--amber) 70%,transparent);
+    transform:translateX(-50%);opacity:0;
+    animation:drawline 1.4s ease-out 1.8s forwards;
+    z-index:1;
+  }
+  @keyframes gather{
+    0%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.4)}
+    40%{opacity:.5}
+    100%{opacity:.16;transform:translate(0,0) scale(1)}
+  }
+  @keyframes drawline{to{height:100%;opacity:.5}}
+
+  .hero-inner{position:relative;z-index:2;max-width:680px}
+
+  .brandbar{position:relative;z-index:3;display:flex;align-items:center;justify-content:space-between;
+    padding:22px 0 0;opacity:0;animation:fade .8s ease .15s forwards}
+  .wordmark{display:flex;align-items:center;gap:12px}
+  .wordmark .sig{width:3px;height:26px;background:var(--amber);border-radius:2px;flex:none}
+  .wordmark .name{font-family:var(--mono);font-weight:700;font-size:17px;letter-spacing:.14em;color:var(--paper)}
+  .wordmark .name b{color:var(--amber);font-weight:700}
+  .brandbar .addr{font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--slate)}
+  @media (max-width:640px){ .brandbar .addr{display:none} }
+
+  .site-foot{background:var(--night-soft);border-top:1px solid var(--line);padding:40px 0 48px}
+  .site-foot .wrap{display:flex;flex-direction:column;gap:16px}
+  .foot-top{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .foot-mark{font-family:var(--mono);font-weight:700;font-size:15px;letter-spacing:.14em;color:var(--paper)}
+  .foot-mark b{color:var(--amber)}
+  .foot-links{display:flex;gap:20px;flex-wrap:wrap}
+  .foot-links a{font-family:var(--body);font-size:13px;color:var(--slate);text-decoration:none;transition:color .2s}
+  .foot-links a:hover{color:var(--paper)}
+  .foot-fine{font-family:var(--mono);font-size:11px;color:var(--slate);line-height:1.7;border-top:1px solid var(--line);padding-top:16px}
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--amber);margin-bottom:24px;opacity:0;animation:fade .8s ease .3s forwards}
+  h1{font-family:var(--display);font-weight:500;font-size:clamp(2.4rem,6vw,4.2rem);line-height:1.04;letter-spacing:-.02em;margin-bottom:24px;opacity:0;animation:fade .9s ease .5s forwards}
+  h1 em{font-style:italic;color:var(--amber)}
+  .sub{font-size:clamp(1.05rem,2.2vw,1.3rem);color:#C9CCD6;max-width:540px;margin-bottom:36px;opacity:0;animation:fade .9s ease .7s forwards}
+  .benefits{list-style:none;display:flex;flex-direction:column;gap:14px;margin-bottom:40px;opacity:0;animation:fade .9s ease .9s forwards}
+  .benefits li{display:flex;align-items:flex-start;gap:14px;font-size:1.02rem}
+  .benefits .mk{flex:none;width:22px;height:22px;border:1.5px solid var(--sage);border-radius:50%;display:grid;place-items:center;margin-top:2px}
+  .benefits .mk::after{content:"";width:8px;height:8px;background:var(--sage);border-radius:50%}
+  @keyframes fade{to{opacity:1;transform:none}}
+
+  .capture{opacity:0;animation:fade .9s ease 1.1s forwards}
+  .capture-row{display:flex;gap:10px;max-width:480px;flex-wrap:wrap}
+  .capture input{
+    flex:1;min-width:200px;padding:16px 18px;border:1px solid var(--line);
+    background:var(--night-soft);color:var(--paper);border-radius:10px;
+    font-family:var(--body);font-size:1rem;transition:border-color .2s;
+  }
+  .capture input::placeholder{color:var(--slate)}
+  .capture input:focus{outline:none;border-color:var(--amber)}
+  .btn,.capture button,.capture input[type="submit"]{
+    padding:16px 28px;border:none;border-radius:10px;background:var(--amber);
+    color:var(--night);font-family:var(--body);font-weight:600;font-size:1rem;
+    cursor:pointer;transition:transform .15s,box-shadow .2s;white-space:nowrap;
+  }
+  .btn:hover,.capture button:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,161,58,.28)}
+  .btn:focus-visible{outline:3px solid var(--paper);outline-offset:2px}
+  .micro{font-size:.85rem;color:var(--slate);margin-top:12px;font-family:var(--mono)}
+  .capture.done .capture-row{display:none}
+  .success{display:none;color:var(--sage);font-size:1.05rem;padding:16px 0}
+  .capture.done .success{display:block}
+
+  section.block{padding:96px 0;position:relative}
+  .lead{font-family:var(--mono);font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--amber);margin-bottom:18px}
+  h2{font-family:var(--display);font-weight:500;font-size:clamp(1.8rem,4vw,2.8rem);line-height:1.1;letter-spacing:-.01em;margin-bottom:20px;max-width:640px}
+
+  .preview{background:var(--night-soft)}
+  .steps{display:grid;gap:2px;margin-top:48px;background:var(--line);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  .step{background:var(--night-soft);padding:32px;display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:start;transition:background .3s}
+  .step:hover{background:var(--night)}
+  .step .n{font-family:var(--mono);font-size:1.1rem;color:var(--amber);font-weight:700}
+  .step h3{font-family:var(--display);font-weight:500;font-size:1.35rem;margin-bottom:8px}
+  .step p{color:#B4B8C4;font-size:1rem}
+
+  .trust{text-align:center}
+  .quote{font-family:var(--display);font-weight:400;font-style:italic;font-size:clamp(1.5rem,3.5vw,2.2rem);line-height:1.35;max-width:760px;margin:0 auto 32px;letter-spacing:-.01em}
+  .attrib{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:56px}
+  .avatar{width:48px;height:48px;border-radius:50%;background:linear-gradient(135deg,var(--sage),var(--slate));flex:none}
+  .attrib .who{text-align:left}
+  .attrib .who strong{display:block;font-weight:600}
+  .attrib .who span{font-size:.9rem;color:var(--slate)}
+  .counter{display:inline-flex;align-items:center;gap:12px;font-family:var(--mono);font-size:.95rem;color:var(--sage);border:1px solid var(--line);border-radius:100px;padding:12px 22px}
+  .counter .dot{width:8px;height:8px;border-radius:50%;background:var(--sage);animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+
+  .final{text-align:center}
+  .final .capture{margin:36px auto 0;max-width:480px}
+  .final .capture-row{justify-content:center}
+
+  .reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.in{opacity:1;transform:none}
+
+  @media (max-width:640px){
+    .step{grid-template-columns:1fr;gap:8px;padding:24px}
+    section.block{padding:64px 0}
+    .capture-row{flex-direction:column}
+    .btn{width:100%}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    .eyebrow,h1,.sub,.benefits,.capture{opacity:1}
+    .focus-line{height:100%;opacity:.5}
+    .reveal{opacity:1;transform:none}
+  }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="noise-field" id="noise" aria-hidden="true"></div>
+  <div class="focus-line" aria-hidden="true"></div>
+  <div class="wrap">
+    <div class="brandbar">
+      <div class="wordmark"><span class="sig" aria-hidden="true"></span><span class="name">LERN<b>WERK</b></span></div>
+      <span class="addr">epubflow.xyz</span>
+    </div>
+    <div class="hero-inner">
+      <p class="eyebrow">Free PDF Guide</p>
+      <h1>Learn to focus <em>twice as deeply</em> in 7 days — without endless cramming</h1>
+      <p class="sub">This guide hands you 5 proven study techniques to sharpen your concentration and study effectively — even if your attention usually collapses after 20 minutes.</p>
+      <ul class="benefits">
+        <li><span class="mk"></span> Beat distraction: hold your focus for hours, not minutes</li>
+        <li><span class="mk"></span> Remember more in less time with active recall &amp; spaced repetition</li>
+        <li><span class="mk"></span> A simple study plan that holds up under exam pressure</li>
+      </ul>
+      <!--
+        SYSTEME.IO: Insert your embedded opt-in form here (same form/tag as the
+        German page is fine, or a separate one if you want to track DE/EN leads
+        under different tags). See index-de.html for the same comment in detail.
+      -->
+      <div class="capture" id="cap1">
+        <div class="capture-row">
+          <input type="email" placeholder="Your email address" aria-label="Email address" required>
+          <button class="btn" type="button" onclick="submitEmail('cap1')">Get the free guide</button>
+        </div>
+        <p class="micro">Free · no spam · unsubscribe anytime</p>
+        <p class="success">✓ Almost there! Check your inbox — your guide is on its way.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<!-- CONTENT PREVIEW -->
+<section class="block preview">
+  <div class="wrap">
+    <p class="lead reveal">What's inside</p>
+    <h2 class="reveal">No motivational fluff. Five techniques you can use today.</h2>
+    <div class="steps">
+      <div class="step reveal"><span class="n">01</span><div><h3>The 25-minute rule</h3><p>How the Pomodoro technique tricks your brain into starting — and staying — instead of putting things off.</p></div></div>
+      <div class="step reveal"><span class="n">02</span><div><h3>Active recall over rereading</h3><p>Why passively rereading barely works — and the one method that actually moves material into long-term memory.</p></div></div>
+      <div class="step reveal"><span class="n">03</span><div><h3>The focus reset</h3><p>A 90-second exercise that pulls your concentration back the moment your mind starts to wander.</p></div></div>
+      <div class="step reveal"><span class="n">04</span><div><h3>Your study plan on one page</h3><p>The template that splits exam material so you never cram at the last minute again.</p></div></div>
+      <div class="step reveal"><span class="n">05</span><div><h3>An environment that studies for you</h3><p>Small changes to your phone, desk and timing that make distraction almost impossible.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TRUST -->
+<section class="block trust">
+  <div class="wrap">
+    <p class="quote reveal">"I spent years thinking I just couldn't concentrate. Two weeks in, I study in half the time — and I actually remember more."</p>
+    <div class="attrib reveal">
+      <div class="avatar" aria-hidden="true"></div>
+      <div class="who"><strong>Lena M.</strong><span>Student, exam season passed</span></div>
+    </div>
+    <div class="counter reveal"><span class="dot" aria-hidden="true"></span> Downloaded by 2,400+ learners</div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="block final">
+  <div class="wrap">
+    <p class="lead reveal">Ready?</p>
+    <h2 class="reveal" style="margin-inline:auto">Get the guide and start studying with real focus today.</h2>
+    <!-- SYSTEME.IO: same embed as cap1 goes here -->
+    <div class="capture reveal" id="cap2">
+      <div class="capture-row">
+        <input type="email" placeholder="Your email address" aria-label="Email address" required>
+        <button class="btn" type="button" onclick="submitEmail('cap2')">Get the free guide</button>
+      </div>
+      <p class="micro">Free · no spam · unsubscribe anytime</p>
+      <p class="success">✓ Almost there! Check your inbox — your guide is on its way.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-foot">
+  <div class="wrap">
+    <div class="foot-top">
+      <span class="foot-mark">LERN<b>WERK</b></span>
+      <nav class="foot-links">
+        <a href="/impressum.html">Imprint</a>
+        <a href="/datenschutz.html">Privacy Policy</a>
+        <a href="mailto:REPLACE_WITH_YOUR_EMAIL">Contact</a>
+      </nav>
+    </div>
+    <p class="foot-fine">
+      Lernwerk — digital study guides for better focus and effective learning. First product: FOKUS-OS.<br>
+      © 2026 Lernwerk · epubflow.xyz · These are proven study techniques, not a guarantee of results. Operated from Germany — see Imprint for legal details.
+    </p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  if(window.matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const field=document.getElementById('noise');
+  const N=window.innerWidth<640?26:48;
+  for(let i=0;i<N;i++){
+    const s=document.createElement('span');
+    const x=Math.random()*100, y=Math.random()*100;
+    s.style.left=x+'%'; s.style.top=y+'%';
+    s.style.setProperty('--dx',(Math.random()*160-80)+'px');
+    s.style.setProperty('--dy',(Math.random()*160-80)+'px');
+    s.style.animationDelay=(Math.random()*.8)+'s';
+    field.appendChild(s);
+  }
+})();
+
+const io=new IntersectionObserver((es)=>{
+  es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}});
+},{threshold:.15});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// PLACEHOLDER — remove once systeme.io's real embedded form is pasted in (see comments above).
+function submitEmail(id){
+  const box=document.getElementById(id);
+  const input=box.querySelector('input');
+  const email=input.value.trim();
+  const ok=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  if(!ok){input.style.borderColor='#E8A13A';input.focus();return;}
+  console.log('Lead captured (placeholder, not yet wired to systeme.io):',email);
+  box.classList.add('done');
+}
+</script>
+</body>
+</html>
