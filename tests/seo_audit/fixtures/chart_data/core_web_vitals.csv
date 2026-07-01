@@ -1,0 +1,4 @@
+metric,value,status
+LCP,2.1,good
+INP,180,needs improvement
+CLS,0.05,good

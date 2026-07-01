@@ -1,0 +1,92 @@
+html-video-production
+=====================
+
+This Manus skill package redistributes selected working materials from the
+open-source HyperFrames project under the terms of the Apache License,
+Version 2.0. A copy of the license is included at the package root as
+LICENSE (and as UPSTREAM_LICENSE_APACHE-2.0.txt for historical context).
+
+Upstream project
+----------------
+  Project:         heygen-com/hyperframes
+  Repository:      https://github.com/heygen-com/hyperframes
+  Upstream license: Apache License, Version 2.0
+  Pinned commit:   c811a2750a2f9a242b764959e7509217f9943511
+  Pinned date:     2026-06-28
+
+Bundled upstream skills (full coverage, 19/19)
+----------------------------------------------
+All 19 upstream skills, located under `skills/<name>/` in the upstream
+repository at the pinned commit, are redistributed under `references/<name>/`
+in this package (the upstream `skills/` layout is flattened one level so each
+skill sits directly at `references/<name>/`, preserving upstream
+`../<sibling>/` cross-links):
+
+  Domain skills:
+    - hyperframes (legacy combined router)
+    - hyperframes-core
+    - hyperframes-animation (absorbs the former standalone `gsap` skill)
+    - hyperframes-creative
+    - hyperframes-cli
+    - hyperframes-registry
+    - hyperframes-media
+    - media-use
+
+  Workflow skills:
+    - product-launch-video
+    - faceless-explainer
+    - pr-to-video
+    - motion-graphics
+    - embedded-captions
+    - talking-head-recut
+    - website-to-video (upstream rename of the former website-to-hyperframes)
+    - music-to-video
+    - slideshow
+    - general-video
+    - remotion-to-hyperframes
+
+Heavy example media binaries (*.mp4, *.webm, *.mov) are stripped to keep the
+package lightweight; the docs and HTML that reference them are preserved.
+The bundled Pixabay sound-effects library is also copied to `assets/sfx/`.
+
+Modifications
+-------------
+Upstream files were modified to bring media generation under the Manus
+Three-Tier Priority Model (Tier 1 Manus-native `generate_speech` /
+`generate_music` / `generate_image`; Tier 2 permitted local open-source
+fallbacks such as whisper.cpp transcription, U2-Net background removal, and
+the bundled Pixabay SFX; Tier 3 prohibited paths — `npx hyperframes init`
+auto-pull, `hyperframes lambda *` paid cloud render, and the HeyGen-paid
+branch). The changes are: a "MANUS OVERRIDE" banner prepended to every
+bundled `SKILL.md`; two lines rewritten in `hyperframes-cli/SKILL.md`
+(scaffold + cloud render); and inline override markers inserted before the
+orchestrator-invoking commands in five workflow `SKILL.md` files. The
+complete summary is in `_manus-overrides/modifications.md`, satisfying the
+modification disclosure requirement of Apache License 2.0 §4(b).
+
+The following Manus-authored materials are added in this package:
+
+  - SKILL.md (top-level)
+  - LICENSE
+  - NOTICE.txt (this file)
+  - _manus-overrides/media-generation.md
+  - _manus-overrides/modifications.md
+  - assets/sfx/ (copy of the upstream Pixabay SFX library, Pixabay Content
+    License; see references/hyperframes-media/assets/sfx/CREDITS.md)
+
+Trademarks and non-affiliation
+------------------------------
+"HyperFrames" and "HeyGen" are trademarks of HeyGen, Inc. They are used in
+this package only to describe the origin of the redistributed materials, in
+the sense permitted by Apache License 2.0 §6 (which does not grant
+permission to use the licensor's trade names). This Manus skill is not
+affiliated with, sponsored by, or endorsed by HeyGen, Inc.
+
+Third-party runtimes
+--------------------
+HyperFrames compositions execute against third-party runtimes that have
+their own licenses, including but not limited to GSAP (GreenSock),
+FFmpeg, Chromium / Puppeteer, and (for select compositions) shader
+transition libraries. Those licenses are independent of the Apache 2.0
+license under which this skill package is redistributed; consult the
+respective projects for their terms before using them in production.
