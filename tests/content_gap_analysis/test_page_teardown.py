@@ -7,7 +7,7 @@ only the CLI usage/help path is exercised via subprocess.
 import subprocess
 import sys
 
-import conftest
+from . import conftest
 
 SCRIPT = conftest.SKILL_SCRIPTS / "page_teardown.py"
 

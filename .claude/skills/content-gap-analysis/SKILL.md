@@ -191,6 +191,7 @@ Optionally add **content briefs** for the top 3–5 opportunities (target keywor
 - **Cite inline.** Weave numbered citations into the prose and map them in a References section; do not leave data claims unsourced.
 - **Be realistic.** Flag which competitors are beatable vs. aspirational; don't recommend chasing terms the target cannot win soon.
 - Explain SEO jargon only when it changes the decision; write for a content/marketing lead, not only SEO experts.
+- **Don't write like an AI report generator.** Skip stock transitions (furthermore, moreover, in conclusion, overall), forced rule-of-three lists, and restating a finding at both the top and bottom of a section. Vary sentence length; state the gap and move on.
 
 ## Fallback (No SEO Tools)
 

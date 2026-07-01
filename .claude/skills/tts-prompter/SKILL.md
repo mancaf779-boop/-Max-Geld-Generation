@@ -72,6 +72,8 @@ The Spoken Text contains the actual words to be synthesized. **This part IS spok
 
 **Tip: Punctuation matters.** Commas, periods, and semicolons create natural pauses. Use them to help the model breathe.
 
+**Tip: Write the words a person would actually say.** When you are composing the Spoken Text yourself (not just relaying user-provided text), avoid the tells of AI-written copy: stock openers, hedged qualifiers, and evenly-balanced sentence pairs. Real speech has contractions, sentence fragments, and uneven rhythm — that reads as more natural once synthesized than polished, symmetrical prose.
+
 ### 3.1 Using Markup Tags
 
 You may use **Markup Tags** (words enclosed in brackets like `[sigh]`) inside the Spoken Text to inject specific, localized actions or style modifications.

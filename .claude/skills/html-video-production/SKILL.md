@@ -86,6 +86,7 @@ Finish through the CLI (`references/hyperframes-cli/SKILL.md`): `npx hyperframes
 5. **Decline** (Route B) when the user wants a photoreal one-shot with no editable HTML / typographic / data layer — this skill cannot synthesize photoreal video.
 6. **Concentrate Claude-Code-specific changes** in this `SKILL.md`, in `_claude-overrides/`, and in the files listed in `_claude-overrides/modifications.md` (every bundled `SKILL.md` carries a short adaptation note; two CLI lines and five orchestrator-invoking workflows carry inline markers). Keep this discipline so future upstream syncs stay clean.
 7. **HyperFrames CLI commands run only after Route A or C is selected** — never scaffold a project for a request that should have been declined under Route B.
+8. **Any narration, on-screen copy, captions, or script text you write must sound like a person wrote it, not an AI.** Across every sub-workflow (`SCRIPT.md`, lower-thirds, title cards, slideshow captions, product-launch VO), avoid stock openers ("In this video, we'll..."), hedged qualifiers, and evenly-paced, grammatically symmetric sentences. Vary rhythm and keep it conversational — this applies on top of, not instead of, each sub-skill's own voice/brand guidance.
 
 ## File map
 

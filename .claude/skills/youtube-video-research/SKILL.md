@@ -276,6 +276,7 @@ When analyzing multiple videos on the same topic, synthesize rather than list se
 | Dumping raw analysis without synthesis | Weave multi-source insights into thematic narratives with quote dialogues |
 | Forgetting to include video links | Always provide YouTube URLs in the Source Videos table and References |
 | **Analysis Failure (e.g., video deleted, no transcript, too long)** | **Fallback:** Use web search to find text summaries, articles, or alternative videos on the same topic. Do not halt the research process. |
+| Writing narrative prose in a generic AI voice | Vary sentence rhythm, drop stock transitions (furthermore, moreover, in conclusion), and let the quotes and specifics carry the paragraph instead of wrapping them in hedged summary language |
 
 ## Scripts
 

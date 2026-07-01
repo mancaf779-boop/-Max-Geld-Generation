@@ -126,4 +126,6 @@ Columns: Competitor Domain, Keyword Gap, Search Volume, Recommended Action.
 **Section 3: Strategic Insights & Recommendations**
 - **Key Highlights:** Total addressable market, Best immediate opportunities.
 - **5 Key Findings:** Bulleted list.
+
+Write these findings the way a practitioner would state them, not the way an AI summarizes a table: skip stock openers ("It is worth noting that..."), vary phrasing between bullets instead of repeating the same sentence template five times, and state the number and the action together in one line.
 - **5 Prioritized Recommendations:** Numbered list.

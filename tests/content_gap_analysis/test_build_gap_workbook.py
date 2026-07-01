@@ -4,7 +4,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-import conftest
+from . import conftest
 
 SCRIPT = conftest.SKILL_SCRIPTS / "build_gap_workbook.py"
 FIXTURES = conftest.FIXTURES

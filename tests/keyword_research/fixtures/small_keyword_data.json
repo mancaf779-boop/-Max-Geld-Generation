@@ -1,0 +1,130 @@
+{
+  "keywords": [
+    {
+      "Keyword": "best ai writer",
+      "Topic Cluster": "AI Writing",
+      "Search Intent": "Commercial",
+      "Monthly Volume (US)": 3000,
+      "Global Volume": 5000,
+      "Keyword Difficulty (KD)": 25,
+      "KD Level": "Easy",
+      "CPC": 2.5,
+      "Parent Topic": "ai writer",
+      "Recommended Content Type": "Comparison Guide",
+      "Priority": "High"
+    },
+    {
+      "Keyword": "ai writer free",
+      "Topic Cluster": "AI Writing",
+      "Search Intent": "Informational",
+      "Monthly Volume (US)": 1500,
+      "Global Volume": 2200,
+      "Keyword Difficulty (KD)": 40,
+      "KD Level": "Medium",
+      "CPC": 1.2,
+      "Parent Topic": "ai writer",
+      "Recommended Content Type": "Blog Post",
+      "Priority": "Medium"
+    },
+    {
+      "Keyword": "ai image generator free",
+      "Topic Cluster": "AI Image",
+      "Search Intent": "Commercial",
+      "Monthly Volume (US)": 4000,
+      "Global Volume": 6000,
+      "Keyword Difficulty (KD)": 60,
+      "KD Level": "Hard",
+      "CPC": 3.0,
+      "Parent Topic": "ai image generator",
+      "Recommended Content Type": "Product Page",
+      "Priority": "High"
+    },
+    {
+      "Keyword": "ai image generator no watermark",
+      "Topic Cluster": "AI Image",
+      "Search Intent": "Transactional",
+      "Monthly Volume (US)": null,
+      "Global Volume": 800,
+      "Keyword Difficulty (KD)": null,
+      "KD Level": "Medium",
+      "CPC": null,
+      "Parent Topic": "ai image generator",
+      "Recommended Content Type": "Product Page",
+      "Priority": "Low"
+    },
+    {
+      "Keyword": "ai homework helper",
+      "Topic Cluster": "Homework Help",
+      "Search Intent": "Informational",
+      "Monthly Volume (US)": 900,
+      "Global Volume": 1300,
+      "Keyword Difficulty (KD)": 18,
+      "KD Level": "Easy",
+      "CPC": 0.8,
+      "Parent Topic": "homework helper",
+      "Recommended Content Type": "Blog Post",
+      "Priority": "Medium"
+    },
+    {
+      "Keyword": "ai math solver",
+      "Topic Cluster": "Homework Help",
+      "Search Intent": "Informational",
+      "Monthly Volume (US)": 1100,
+      "Global Volume": 1600,
+      "Keyword Difficulty (KD)": 22,
+      "KD Level": "Easy",
+      "CPC": 0.9,
+      "Parent Topic": "homework helper",
+      "Recommended Content Type": "Blog Post",
+      "Priority": "Low"
+    }
+  ],
+  "competitors": [
+    {
+      "Domain": "competitor-one.com",
+      "Traffic Share %": "22%",
+      "Traffic Value": "$12,000",
+      "DR": 68,
+      "Observations": "Strong informational content, weak commercial pages."
+    },
+    {
+      "Domain": "competitor-two.com",
+      "Traffic Share %": "15%",
+      "Traffic Value": "$8,000",
+      "DR": 55,
+      "Observations": "Aggressive programmatic SEO on tool pages."
+    }
+  ],
+  "gaps": [
+    {
+      "Competitor Domain": "competitor-one.com",
+      "Keyword Gap": "ai writer for students",
+      "Search Volume": 1200,
+      "Recommended Action": "Create a dedicated landing page."
+    },
+    {
+      "Competitor Domain": "competitor-two.com",
+      "Keyword Gap": "ai image generator api",
+      "Search Volume": 700,
+      "Recommended Action": "Publish a developer-facing API doc page."
+    }
+  ],
+  "insights": {
+    "tam": "25,000 monthly searches",
+    "opportunities": "Focus on low-KD informational homework-help queries.",
+    "findings": [
+      "Finding 1",
+      "Finding 2",
+      "Finding 3",
+      "Finding 4",
+      "Finding 5"
+    ],
+    "recommendations": [
+      "Recommendation 1",
+      "Recommendation 2",
+      "Recommendation 3",
+      "Recommendation 4",
+      "Recommendation 5"
+    ]
+  }
+}

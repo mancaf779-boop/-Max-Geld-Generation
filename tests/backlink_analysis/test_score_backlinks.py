@@ -73,11 +73,16 @@ def test_low_risk_high_authority_domain(sb):
 
 
 def test_medium_risk_high_volume_no_spam_markers(sb):
+    # A mostly-nofollow, non-spam, high-authority domain with a very large
+    # links_to_target count (e.g. a sitewide footer/partner badge) should be
+    # MEDIUM: high volume but none of the HIGH-risk toxic signals fire
+    # (not near-all-dofollow, not spam, not low-DA, not a link-farm TLD,
+    # no link-selling anchors).
     records = [
         {
             "domain": "partner-network.com",
             "domain_authority": "40",
-            "follow": "true",
+            "follow": "false",
             "anchor_text": f"partner link {i}",
             "is_spam": "false",
             "links_to_target": "1",
@@ -90,6 +95,7 @@ def test_medium_risk_high_volume_no_spam_markers(sb):
     records[2]["links_to_target"] = "0"
     scored = sb.score_backlinks(records)
     row = scored[0]
+    assert row["toxic_flags"] == []
     assert row["risk_band"] == "MEDIUM"
 
 

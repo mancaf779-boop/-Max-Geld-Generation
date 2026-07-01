@@ -104,6 +104,8 @@ For Backlinks, answer whether the pattern looks homepage/brand-led, PR-led, SEO-
 
 For Key Dependencies and Vulnerabilities, identify what the target domain relies on most heavily (specific page types, specific countries, branded vs non-branded traffic, specific link sources) and where they appear exposed. Frame this as a strategic intelligence section — what a competitor should understand about the target's position. Do NOT provide recommendations or action plans for the target domain.
 
+Throughout, avoid the tells of AI-generated prose: stock transitions (furthermore, moreover, in conclusion), forced rule-of-three lists, and repeating the same finding at the top and bottom of a section. Vary sentence rhythm — this should read like a competitor's internal strategy memo, not a templated report.
+
 ## Mandatory Charts and Graphs
 
 Generate and embed every chart supported by the available data. The report should normally include at least three charts, and stronger reports include five or more.

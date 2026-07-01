@@ -4,7 +4,7 @@ import sys
 
 import pandas as pd
 
-import conftest
+from . import conftest
 
 SCRIPT = conftest.SKILL_SCRIPTS / "top_cluster_deepdive.py"
 FIXTURES = conftest.FIXTURES

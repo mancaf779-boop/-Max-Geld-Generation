@@ -219,6 +219,8 @@ for i, insight in enumerate(insights, start=21):
     ws.cell(row=i, column=2, value=insight)
 ```
 
+Write insight text the way an analyst would state it out loud, not the way an AI summarizes a table. Skip stock openers like "It is worth noting that" or "Overall, the data shows"; state the number and its implication directly, and vary phrasing between bullets instead of repeating the same sentence template three times in a row.
+
 #### Content Completeness
 
 | Check | Action |

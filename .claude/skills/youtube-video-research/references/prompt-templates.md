@@ -1,4 +1,4 @@
-# Prompt Templates for manus-analyze-video
+# Prompt Templates for Video Analysis
 
 ## Table of Contents
 
@@ -11,7 +11,7 @@
 
 ## High-Density Prompt Engineering Principles
 
-A/B testing confirms that `manus-analyze-video` output quality is **entirely determined by prompt design**. A structured, quote-demanding prompt yields 2.4x more content, 12 direct quotes vs 0, and 18 precise data points vs 6 vague mentions — on the exact same video. Follow these rules for every prompt:
+A/B testing confirms that video-analysis tool output quality is **entirely determined by prompt design**. A structured, quote-demanding prompt yields 2.4x more content, 12 direct quotes vs 0, and 18 precise data points vs 6 vague mentions — on the exact same video. Follow these rules for every prompt:
 
 **Mandatory elements in every prompt:**
 

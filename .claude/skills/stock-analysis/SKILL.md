@@ -156,6 +156,7 @@ User: "Analyze tech stocks: AAPL, NVDA, AMD"
 4. **Regional stocks** - Set region/lang for non-US markets
 5. **Time relevance** - Adjust chart range based on user's timeframe
 6. **Insider context** - Combine holder data with profile for complete picture
+7. **Sound like an analyst, not an AI** - When writing narrative summary or due-diligence sections, skip stock openers ("It is important to note that...") and hedge-everything phrasing; state the number and what it means in one line, and vary sentence length between findings.
 
 ## Quick Quote Lookups
 

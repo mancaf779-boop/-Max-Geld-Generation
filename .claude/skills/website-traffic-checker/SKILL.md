@@ -28,6 +28,7 @@ These limits are MANDATORY and override any larger defaults:
 4. **No Bullet-Point Dumps**: Do not write the report as a list of answers to questions. Use full sentences and paragraphs. The only permitted bulleted/numbered list is the final Summary of Findings.
 5. **Compact Tables**: Tables must be compact (5-7 rows maximum). Do not dump raw data. Summarize, aggregate, or show the top 5 only.
 6. **Inline Citations**: You MUST use inline citations (e.g., `[1]`, `[2]`) that reference specific data files in a "References" section at the end of the report.
+7. **No AI Tells**: Do not write like an AI report generator. Avoid stock transitions (furthermore, moreover, additionally, in conclusion, overall), forced rule-of-three lists, and restating the same insight at both the start and end of a section. Vary sentence length and rhythm across paragraphs. The report should read like it was written by a human analyst who knows the account, not generated from a template.
 
 ## The Analytical Framework
 

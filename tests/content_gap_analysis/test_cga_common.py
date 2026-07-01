@@ -4,7 +4,7 @@ import sys
 import pandas as pd
 import pytest
 
-import conftest  # noqa: F401  (adds scripts dir to sys.path)
+from . import conftest  # noqa: F401  (adds scripts dir to sys.path)
 
 import cga_common as cc
 

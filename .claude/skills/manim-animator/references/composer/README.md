@@ -74,7 +74,7 @@ Output a comprehensive `scenes.md` file with this structure:
 [Detailed description of what happens, what's shown, what's explained]
 
 ### Narration Notes
-[Key points to convey, tone, pacing notes]
+[Key points to convey, tone, pacing notes. Write like a person explaining this to a friend, not an AI summarizing a textbook: skip stock openers ("In this video, we will..."), avoid hedging every claim, and vary sentence length instead of a string of evenly-paced, grammatically symmetric sentences.]
 
 ### Technical Notes
 - [Specific Manim classes/methods to use]

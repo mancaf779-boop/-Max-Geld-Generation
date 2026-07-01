@@ -172,6 +172,8 @@ Avoid phrases like these:
 - “A robust SEO strategy should…”
 - “Overall, the website has opportunities…”
 
+**Do not write like an AI report generator.** Avoid stock transition words (furthermore, moreover, additionally, in conclusion), forced rule-of-three lists, restating the same point at the start and end of a section, and mechanically even paragraph lengths. Vary sentence length. State the finding once, plainly, and move on — do not hedge a claim and then repeat the hedge later in the section. A reader should not be able to tell the report was AI-written.
+
 ## Evidence standards
 
 Every claim about strategy, cause, quality, or priority must be backed by a data point already in the report. If evidence is missing, write “Data not provided” or identify the needed export. Do not pretend a full analysis is possible when key data is absent; tell the user which datasets are lacking and what additional data would be needed for a fuller report.
