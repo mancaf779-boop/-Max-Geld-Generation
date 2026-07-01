@@ -8,6 +8,7 @@
     }
   },
   "enabledPlugins": {
-    "superpowers@superpowers-marketplace": true
+    "superpowers@superpowers-marketplace": true,
+    "frontend-design@claude-code-marketplace": true
   }
 }
