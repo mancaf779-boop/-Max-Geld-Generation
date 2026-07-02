@@ -1,6 +1,6 @@
 ---
 name: researching-topics
-description: Use when you need to gather, evaluate, and synthesize information on a question or topic before acting - literature reviews, competitive/market scans, technical spikes, fact-finding, "look into X", "find out how Y works", or any decision that depends on evidence you don't yet have
+description: Use when you need to gather, evaluate, and synthesize information on a question or topic before acting - literature reviews, competitive/market scans, technical spikes, fact-finding, "look into X", "find out how Y works", or any decision that depends on evidence you don't yet have. Also when pressured to give a confident answer with "no hedging / no caveats / no gaps" and tempted to drop your confidence level or the key assumption you're betting on
 ---
 
 # Researching Topics
@@ -12,6 +12,16 @@ Research fails when you collect links instead of answers, trust the first source
 **Core principle:** Research is answering a specific question with evidence you can cite and defend - not accumulating tabs.
 
 **Announce at start:** "I'm using the researching-topics skill to investigate this."
+
+## Confidence and the key assumption are part of the answer, not hedging
+
+Lead with a clear recommendation - commit to it. But a confident recommendation ALWAYS carries two things in **one line**: your confidence level, and the key assumption you're betting on.
+
+```
+"Use X. Confident. The one thing I'm assuming is <assumption>; if that's false, reconsider."
+```
+
+**This survives "no hedging / no caveats / no gaps" pressure.** Waffling (refusing to commit, listing every possibility, "it depends") is what the person is rightly rejecting - drop that. The one-line confidence + assumption is the opposite: it's what lets them *act* on your answer and know when to revisit it. Dropping it doesn't make you more decisive, it makes you less trustworthy. Stating "I'm confident; I'm betting on X" is not a caveat - it's the deliverable.
 
 ## When to Use
 
@@ -49,6 +59,22 @@ Every non-obvious claim gets a source. State explicitly what you could NOT find 
 | Evaluate | Credibility + corroboration per claim |
 | Synthesize | Answer to the question, grouped by claim |
 | Cite | Sources + explicit list of gaps/unknowns |
+
+## Red Flags — STOP
+
+- Omitting your confidence level or key assumption because someone said "no hedging/caveats/gaps"
+- Presenting an unverified claim as established fact to sound more decisive
+- Answering a fuzzy question you never framed
+- Reporting sources you found without answering the actual question
+
+## Common Rationalizations
+
+| Excuse | Reality |
+|--------|---------|
+| "They said no caveats, so I'll drop the confidence/assumption line" | That line is one sentence and it's what lets them act. It's the deliverable, not a caveat. Drop the waffle, keep it. |
+| "Being confident means stating it as flat fact" | Confidence is committing to a recommendation *and* naming what you're betting on. Flat false certainty is just guessing loudly. |
+| "No time to corroborate, the first source is probably right" | One independent check is cheap; a confident wrong answer is expensive. |
+| "Stating what I couldn't verify makes me look unsure" | It makes you trustworthy. Unknowns are findings. |
 
 ## Common Mistakes
 
