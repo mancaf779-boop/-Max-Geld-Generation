@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>FOKUS-OS 50+ — Klar im Kopf ab 50 (Leseprobe)</title>
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --navy: #141c30;
+    --navy-soft: #1b2440;
+    --amber: #e9a23b;
+    --cream: #f4f2ec;
+    --ink: #2b3245;
+    --muted: #6a7186;
+    --rule: #ddd8cc;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "DejaVu Sans", Verdana, sans-serif;
+    color: var(--ink);
+    font-size: 10.5pt;
+    line-height: 1.52;
+  }
+  .page {
+    width: 210mm;
+    min-height: 296mm;
+    padding: 18mm 24mm 20mm 24mm;
+    background: var(--cream);
+    page-break-after: always;
+    position: relative;
+  }
+  .page.dark { background: var(--navy); color: #e8e6df; }
+
+  .brandline { font-family: "DejaVu Sans Mono", monospace; font-size: 8.5pt; letter-spacing: 0.08em; }
+  .brandline .b { color: var(--amber); font-weight: bold; }
+  .brandline .u { color: #7c86a0; }
+
+  .kicker {
+    font-family: "DejaVu Sans Mono", monospace;
+    font-size: 9pt;
+    font-weight: bold;
+    letter-spacing: 0.12em;
+    color: var(--amber);
+    text-transform: uppercase;
+    margin-bottom: 3mm;
+  }
+  h1 {
+    font-size: 30pt;
+    line-height: 1.12;
+    font-weight: 800;
+    margin: 2mm 0 6mm 0;
+    color: #fff;
+  }
+  h2 {
+    font-size: 19pt;
+    line-height: 1.2;
+    font-weight: 800;
+    color: var(--navy);
+    margin: 0 0 4mm 0;
+  }
+  h3 { font-size: 12pt; color: var(--navy); margin: 1.4em 0 0.4em 0; }
+  p { margin: 0 0 0.8em 0; }
+  ul, ol { margin: 0.2em 0 0.9em 1.2em; padding: 0; }
+  li { margin-bottom: 0.3em; }
+
+  .cover-rail { border-left: 2.5pt solid var(--amber); padding-left: 7mm; margin-top: 14mm; }
+  .cover-sub { font-size: 12.5pt; line-height: 1.6; color: #c6c9d4; max-width: 130mm; }
+  .cover-foot {
+    position: absolute; left: 24mm; right: 24mm; bottom: 16mm;
+    border-top: 0.5pt solid #333d58; padding-top: 4mm;
+    font-family: "DejaVu Sans Mono", monospace; font-size: 8.5pt; color: #7c86a0;
+  }
+
+  .num {
+    font-size: 26pt; font-weight: 800; color: var(--amber);
+    float: left; margin: -1mm 5mm 0 0; line-height: 1;
+  }
+  .method { clear: both; margin-bottom: 5.5mm; }
+  .method h3 { margin-top: 0; font-size: 13pt; }
+
+  .action {
+    background: #fbeed3;
+    border-left: 2.5pt solid var(--amber);
+    padding: 3.5mm 5mm;
+    margin: 1em 0 1.4em 0;
+    page-break-inside: avoid;
+  }
+  .action .label {
+    font-family: "DejaVu Sans Mono", monospace;
+    font-size: 8pt; font-weight: bold; letter-spacing: 0.1em;
+    color: #b07417; margin-bottom: 1mm;
+  }
+  .action p { margin: 0; font-weight: bold; color: #4a3a1a; }
+
+  .note {
+    background: #e7ebe7;
+    border-left: 2.5pt solid #5c7a68;
+    padding: 3.5mm 5mm;
+    margin: 1em 0;
+    page-break-inside: avoid;
+  }
+  .note .label {
+    font-family: "DejaVu Sans Mono", monospace;
+    font-size: 8pt; font-weight: bold; letter-spacing: 0.1em;
+    color: #45604f; margin-bottom: 1mm;
+  }
+
+  .footer {
+    position: absolute; left: 24mm; right: 24mm; bottom: 12mm;
+    border-top: 0.5pt solid var(--rule); padding-top: 3mm;
+    display: flex; justify-content: space-between;
+    font-family: "DejaVu Sans Mono", monospace; font-size: 8pt; color: #9a9485;
+  }
+  .small { font-size: 8.5pt; color: var(--muted); }
+  em.hint { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="page dark">
+  <div class="brandline"><span class="b">FOKUS-OS</span><br><span class="u">epubflow.xyz</span></div>
+  <div class="cover-rail">
+    <div class="kicker">Leseprobe · Spezial-Guide für Frauen ab 50</div>
+    <h1>Klar im Kopf<br>ab 50</h1>
+    <p class="cover-sub">Konzentration und Lernen verändern sich — du bist nicht „zu alt", dein System braucht nur ein Update. Was in den Wechseljahren mit dem Fokus passiert, warum dein Gedächtnis besser ist als sein Ruf, und welche Methoden jetzt wirklich funktionieren.</p>
+  </div>
+  <div class="cover-foot">Ehrlich statt Anti-Aging-Blabla. Konkret statt Kalenderspruch.</div>
+</div>
+
+<!-- ============ VORWORT ============ -->
+<div class="page">
+  <div class="kicker">Kurz vorweg</div>
+  <h2>Dein Kopf ist nicht das Problem.</h2>
+  <p>Vielleicht kennst du das: Du liest eine Seite und weißt am Ende nicht, was drinstand. Du gehst in die Küche und hast vergessen, warum. Du willst dich in etwas Neues einarbeiten — ein Programm, eine Sprache, eine Fortbildung — und fragst dich leise, ob du dafür inzwischen zu alt bist.</p>
+  <p>Hier ist die ehrliche Antwort, und sie ist besser als erwartet: <strong>Dein Gehirn kann bis ins hohe Alter lernen.</strong> Die Forschung ist da eindeutig — neue Verknüpfungen entstehen ein Leben lang. Was sich ab 50 tatsächlich verändert, ist nicht die Fähigkeit zu lernen, sondern die <em>Bedingungen</em> drumherum: Hormone stellen sich um, der Schlaf wird leichter, der Alltag ist oft voller als je zuvor — Job, Eltern, Kinder, alles gleichzeitig.</p>
+  <p>Die meisten Lern-Ratgeber ignorieren das komplett. Sie sind für Studentinnen geschrieben, die nachts um zwei pauken können. Dieser Guide ist es nicht. Er nimmt die fünf Hürden ernst, die ab 50 wirklich im Weg stehen — und zeigt dir zu jeder, was funktioniert.</p>
+  <p>Im zweiten Teil bekommst du die sechs FOKUS-OS-Kernmethoden in der Fassung, die zu deinem Leben passt. Und am Ende einen sanften 14-Tage-Einstieg, der neben einem vollen Alltag machbar ist.</p>
+  <div class="note">
+    <div class="label">EIN EHRLICHES WORT</div>
+    <p>Keine Methode hier ist ein Zaubertrick, und dieser Guide ersetzt keine Ärztin. Er zeigt dir erprobte Techniken, die mit deinem Gehirn arbeiten statt gegen es. Sie wirken, wenn du sie anwendest — lesen allein ändert nichts.</p>
+  </div>
+  <div class="footer"><span>FOKUS-OS 50+ · epubflow.xyz</span><span>1</span></div>
+</div>
+
+<!-- ============ HUERDE 1 ============ -->
+<div class="page">
+  <div class="kicker">Teil 1 — Die fünf Hürden ab 50</div>
+  <h2>Was dir wirklich im Weg steht — und was dagegen wirkt.</h2>
+
+  <div class="method">
+    <div class="num">1</div>
+    <h3>Brain Fog: der Nebel der Wechseljahre</h3>
+    <p>Wortfindungsstörungen, Konzentrationslöcher, das Gefühl von Watte im Kopf — wenn dir das bekannt vorkommt: Es ist real, es ist häufig, und es ist keine Einbildung. Rund zwei Drittel aller Frauen erleben in den Wechseljahren kognitive Veränderungen. Der Grund ist simpel: Östrogen wirkt auch im Gehirn, unter anderem genau dort, wo Aufmerksamkeit und Erinnerung arbeiten. Stellt sich der Spiegel um, ruckelt es vorübergehend.</p>
+    <p>Das Wichtigste zuerst: <strong>Es ist eine Übergangsphase, kein Dauerzustand.</strong> Studien zeigen, dass sich die Denkleistung nach der Umstellung meist wieder stabilisiert. Bis dahin gilt: Arbeite mit dem Nebel, nicht gegen ihn.</p>
+    <ul>
+      <li><strong>Kürzere Runden:</strong> An Nebeltagen sind drei konzentrierte 15-Minuten-Runden mehr wert als eine zähe Stunde.</li>
+      <li><strong>Alles auslagern:</strong> Zettel, Listen, Kalender. Jedes „das merk ich mir schon" ist an Nebeltagen eine Wette, die du verlierst — und verlorene Wetten nagen am Selbstvertrauen.</li>
+      <li><strong>Bewegung wirkt sofort:</strong> Ein zügiger 20-Minuten-Spaziergang verbessert die Durchblutung des Gehirns messbar — oft der schnellste Weg aus dem Nebel.</li>
+    </ul>
+    <div class="action">
+      <div class="label">→ SOFORT UMSETZEN</div>
+      <p>Plane an Nebeltagen nichts um: Verkürze nur die Runden. 15 Minuten Fokus, 5 Minuten Pause am Fenster. Der Stoff bleibt derselbe, die Portionen werden kleiner.</p>
+    </div>
+  </div>
+  <div class="footer"><span>FOKUS-OS 50+ · epubflow.xyz</span><span>2</span></div>
+</div>
+
+<!-- ============ CTA ============ -->
+<div class="page dark">
+  <div class="brandline"><span class="b">FOKUS-OS</span><br><span class="u">epubflow.xyz</span></div>
+  <div class="cover-rail">
+    <div class="kicker">Wie es weitergeht</div>
+    <h1 style="font-size:24pt;">Das war Hürde 1<br>von 5.</h1>
+    <p class="cover-sub" style="margin-bottom:6mm;">Im kompletten Guide „Klar im Kopf ab 50" warten die übrigen vier Hürden — und das ganze System:</p>
+    <p class="cover-sub" style="font-size:11pt;">
+    → <strong style="color:#fff;">Schlaf &amp; Energie:</strong> dein Lernfenster hat sich verschoben — so findest du es<br>
+    → <strong style="color:#fff;">Gedächtnis:</strong> was wirklich nachlässt, was besser wird, und wie du es nutzt<br>
+    → <strong style="color:#fff;">Keine Zeit:</strong> Lernen in den Sandwich-Jahren — 15 Minuten, die zählen<br>
+    → <strong style="color:#fff;">„Zu alt dafür":</strong> wie du den leisesten, teuersten Satz entschärfst<br>
+    → <strong style="color:#fff;">Die 6 FOKUS-OS-Methoden</strong> in der 50+-Fassung + der sanfte 14-Tage-Start<br>
+    → <strong style="color:#fff;">Gut zu wissen:</strong> wann du Brain Fog ärztlich abklären lassen solltest
+    </p>
+    <p class="cover-sub" style="margin-top:8mm; color:#e9a23b; font-weight:bold;">Hol dir den kompletten Guide zum Einführungspreis auf epubflow.xyz — den Link findest du in der E-Mail zu dieser Leseprobe.</p>
+  </div>
+  <div class="cover-foot">Erprobte Lernmethoden, keine Erfolgsgarantie. Keine medizinische Beratung. © 2026 FOKUS-OS · epubflow.xyz</div>
+</div>
+
+</body>
+</html>

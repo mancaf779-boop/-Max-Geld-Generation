@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>VITAL-OS — Leichter ab 50 (Leseprobe)</title>
+<style>
+  @page { size: A4; margin: 0; }
+  :root {
+    --navy: #141c30;
+    --amber: #e9a23b;
+    --cream: #f4f2ec;
+    --ink: #2b3245;
+    --muted: #6a7186;
+    --rule: #ddd8cc;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "DejaVu Sans", Verdana, sans-serif;
+    color: var(--ink);
+    font-size: 10.5pt;
+    line-height: 1.52;
+  }
+  .page {
+    width: 210mm;
+    min-height: 296mm;
+    padding: 18mm 24mm 20mm 24mm;
+    background: var(--cream);
+    page-break-after: always;
+    position: relative;
+  }
+  .page.dark { background: var(--navy); color: #e8e6df; }
+
+  .brandline { font-family: "DejaVu Sans Mono", monospace; font-size: 8.5pt; letter-spacing: 0.08em; }
+  .brandline .b { color: var(--amber); font-weight: bold; }
+  .brandline .u { color: #7c86a0; }
+
+  .kicker {
+    font-family: "DejaVu Sans Mono", monospace;
+    font-size: 9pt; font-weight: bold; letter-spacing: 0.12em;
+    color: var(--amber); text-transform: uppercase; margin-bottom: 3mm;
+  }
+  h1 { font-size: 30pt; line-height: 1.12; font-weight: 800; margin: 2mm 0 6mm 0; color: #fff; }
+  h2 { font-size: 19pt; line-height: 1.2; font-weight: 800; color: var(--navy); margin: 0 0 4mm 0; }
+  h3 { font-size: 12pt; color: var(--navy); margin: 1.4em 0 0.4em 0; }
+  p { margin: 0 0 0.8em 0; }
+  ul, ol { margin: 0.2em 0 0.9em 1.2em; padding: 0; }
+  li { margin-bottom: 0.3em; }
+
+  .cover-rail { border-left: 2.5pt solid var(--amber); padding-left: 7mm; margin-top: 14mm; }
+  .cover-sub { font-size: 12.5pt; line-height: 1.6; color: #c6c9d4; max-width: 130mm; }
+  .cover-foot {
+    position: absolute; left: 24mm; right: 24mm; bottom: 16mm;
+    border-top: 0.5pt solid #333d58; padding-top: 4mm;
+    font-family: "DejaVu Sans Mono", monospace; font-size: 8.5pt; color: #7c86a0;
+  }
+
+  .num { font-size: 26pt; font-weight: 800; color: var(--amber); float: left; margin: -1mm 5mm 0 0; line-height: 1; }
+  .method { clear: both; margin-bottom: 5.5mm; }
+  .method h3 { margin-top: 0; font-size: 13pt; }
+
+  .action {
+    background: #fbeed3; border-left: 2.5pt solid var(--amber);
+    padding: 3.5mm 5mm; margin: 1em 0 1.4em 0; page-break-inside: avoid;
+  }
+  .action .label {
+    font-family: "DejaVu Sans Mono", monospace; font-size: 8pt; font-weight: bold;
+    letter-spacing: 0.1em; color: #b07417; margin-bottom: 1mm;
+  }
+  .action p { margin: 0; font-weight: bold; color: #4a3a1a; }
+
+  .note {
+    background: #e7ebe7; border-left: 2.5pt solid #5c7a68;
+    padding: 3.5mm 5mm; margin: 1em 0; page-break-inside: avoid;
+  }
+  .note .label {
+    font-family: "DejaVu Sans Mono", monospace; font-size: 8pt; font-weight: bold;
+    letter-spacing: 0.1em; color: #45604f; margin-bottom: 1mm;
+  }
+
+  .footer {
+    position: absolute; left: 24mm; right: 24mm; bottom: 12mm;
+    border-top: 0.5pt solid var(--rule); padding-top: 3mm;
+    display: flex; justify-content: space-between;
+    font-family: "DejaVu Sans Mono", monospace; font-size: 8pt; color: #9a9485;
+  }
+  .small { font-size: 8.5pt; color: var(--muted); }
+  em.hint { color: var(--muted); }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="page dark">
+  <div class="brandline"><span class="b">VITAL-OS</span><br><span class="u">epubflow.xyz</span></div>
+  <div class="cover-rail">
+    <div class="kicker">Leseprobe · Praxis-Guide Abnehmen ab 50</div>
+    <h1>Leichter<br>ab 50</h1>
+    <p class="cover-sub">Warum dein Körper in den Wechseljahren anders rechnet als früher — und die fünf Hebel, mit denen Abnehmen wieder funktioniert. Ohne Crash-Diät, ohne Wunderpillen, ohne Punkte zählen.</p>
+  </div>
+  <div class="cover-foot">Ehrlich statt Diät-Wahnsinn. Konkret statt Kalenderspruch.</div>
+</div>
+
+<!-- ============ VORWORT ============ -->
+<div class="page">
+  <div class="kicker">Kurz vorweg</div>
+  <h2>Dein Körper ist nicht kaputt. Er rechnet nur anders.</h2>
+  <p>Vielleicht kennst du das: Du isst wie immer — und nimmst trotzdem zu. Die Diät, die mit 35 funktioniert hat, bewegt mit 52 gar nichts mehr. Und das Fett sitzt plötzlich woanders: weniger an Hüfte und Beinen, mehr am Bauch.</p>
+  <p>Das ist keine Einbildung und kein Mangel an Disziplin. In den Wechseljahren verändert sich die Rechnung: Der Östrogenspiegel sinkt, dadurch verschiebt sich die Fettverteilung Richtung Bauch. Gleichzeitig verliert der Körper ab der Lebensmitte schleichend Muskelmasse — und Muskeln sind dein größter Kalorienverbraucher. Weniger Muskeln heißt: Der Grundumsatz sinkt, dieselbe Ernährung wird langsam zu viel. Dazu kommen oft schlechterer Schlaf und mehr Stress, beides treibt den Appetit.</p>
+  <p><strong>Die gute Nachricht:</strong> Wenn du verstehst, was sich verändert hat, kannst du gezielt gegensteuern. Nicht mit härteren Diäten — die verschärfen den Muskelverlust sogar —, sondern mit fünf Hebeln, die genau an den richtigen Stellen ansetzen. Genau die bekommst du in diesem Guide, plus einen 14-Tage-Einstieg, der neben einem vollen Alltag machbar ist.</p>
+  <div class="note">
+    <div class="label">EIN EHRLICHES WORT</div>
+    <p>Realistisch sind etwa 0,25 bis 0,5 Kilo pro Woche — alles, was deutlich schneller verspricht, kostet meist Muskeln und kommt zurück. Dieser Guide ist keine medizinische oder Ernährungsberatung: Wenn du Vorerkrankungen hast oder Medikamente nimmst, sprich vor der Umstellung mit deiner Ärztin.</p>
+  </div>
+  <div class="footer"><span>VITAL-OS · Leichter ab 50 · epubflow.xyz</span><span>1</span></div>
+</div>
+
+<!-- ============ HEBEL 1 ============ -->
+<div class="page">
+  <div class="kicker">Teil 1 — Die fünf Hebel</div>
+  <h2>Was ab 50 wirklich wirkt.</h2>
+
+  <div class="method">
+    <div class="num">1</div>
+    <h3>Eiweiß zuerst: der Muskelschutz</h3>
+    <p>Der wichtigste Hebel überhaupt — und der am meisten unterschätzte. Beim Abnehmen verlierst du nie nur Fett, sondern immer auch Muskeln. Ab 50 ist das doppelt teuer: Die Muskeln schwinden ohnehin schneller, und jedes verlorene Kilo Muskulatur senkt deinen Grundumsatz weiter. So entsteht der Jo-Jo: Nach der Diät verbrauchst du weniger als vorher.</p>
+    <p>Der Schutzschild ist Eiweiß. Es sättigt von allen Nährstoffen am stärksten, es kostet den Körper bei der Verdauung am meisten Energie, und es liefert das Baumaterial, das deine Muskeln vor dem Abbau schützt. Für Frauen ab 50 werden häufig etwa 1,2 bis 1,5 Gramm pro Kilo Körpergewicht am Tag empfohlen — deutlich mehr, als die meisten essen.</p>
+    <ul>
+      <li><strong>Die einfache Regel:</strong> Jede Mahlzeit enthält eine sichtbare Eiweißquelle — Quark, Skyr, Eier, Fisch, Geflügel, Hülsenfrüchte, Tofu, Käse.</li>
+      <li><strong>Frühstück ist der Hebel im Hebel:</strong> Ein Eiweiß-Frühstück (z. B. Skyr mit Beeren und Nüssen statt Brötchen mit Marmelade) hält viele Frauen bis mittags satt — der Nachmittags-Heißhunger wird spürbar leiser.</li>
+      <li><strong>Nicht kompliziert machen:</strong> Du musst nichts wiegen. „Ist eine Eiweißquelle auf dem Teller?" reicht als Frage für den Anfang.</li>
+    </ul>
+    <div class="action">
+      <div class="label">→ SOFORT UMSETZEN</div>
+      <p>Ersetze als Erstes nur das Frühstück: eine Eiweißquelle statt Brot und Süßem. Eine Woche lang, sonst ändert sich nichts. Beobachte, was nachmittags mit deinem Heißhunger passiert.</p>
+    </div>
+  </div>
+  <div class="footer"><span>VITAL-OS · Leichter ab 50 · epubflow.xyz</span><span>2</span></div>
+</div>
+
+<!-- ============ CTA ============ -->
+<div class="page dark">
+  <div class="brandline"><span class="b">VITAL-OS</span><br><span class="u">epubflow.xyz</span></div>
+  <div class="cover-rail">
+    <div class="kicker">Wie es weitergeht</div>
+    <h1 style="font-size:24pt;">Das war Hebel 1<br>von 5.</h1>
+    <p class="cover-sub" style="margin-bottom:6mm;">Im kompletten Guide „Leichter ab 50" warten die übrigen vier Hebel — und der Plan, der alles zusammenbringt:</p>
+    <p class="cover-sub" style="font-size:11pt;">
+    → <strong style="color:#fff;">Kraft schlägt Kondition:</strong> das 2×20-Minuten-Programm gegen den Muskelverlust<br>
+    → <strong style="color:#fff;">Der Teller statt der Diät:</strong> die 80/20-Logik ohne Verbote und Punktezählen<br>
+    → <strong style="color:#fff;">Schlaf &amp; Stress:</strong> die unsichtbaren Dickmacher — und ihre Gegenmittel<br>
+    → <strong style="color:#fff;">Der Wochen-Rhythmus:</strong> Schluss mit Waage-Terror und Plateau-Panik<br>
+    → <strong style="color:#fff;">Ehrlich eingeordnet:</strong> Abnehmspritzen, Schilddrüse &amp; wann du zur Ärztin solltest<br>
+    → <strong style="color:#fff;">Der 14-Tage-Start:</strong> Schritt für Schritt neben einem vollen Alltag
+    </p>
+    <p class="cover-sub" style="margin-top:8mm; color:#e9a23b; font-weight:bold;">Hol dir den kompletten Guide zum Einführungspreis auf epubflow.xyz — den Link findest du in der E-Mail zu dieser Leseprobe.</p>
+  </div>
+  <div class="cover-foot">Keine Erfolgsgarantie, keine medizinische Beratung. © 2026 VITAL-OS · epubflow.xyz</div>
+</div>
+
+</body>
+</html>
