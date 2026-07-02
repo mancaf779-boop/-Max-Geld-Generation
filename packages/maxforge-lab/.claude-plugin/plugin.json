@@ -1,9 +1,9 @@
 {
-  "name": "maxgeld-skills",
+  "name": "maxforge-lab",
   "description": "Agent skills for the full research-to-execution loop: researching topics, analyzing data of every kind, designing step-by-step workflows, and orchestrating tasks into verified action",
   "version": "1.0.0",
   "author": {
-    "name": "MaxGeld",
+    "name": "Maxforge Lab",
     "email": "mancaf779@gmail.com"
   },
   "homepage": "https://github.com/mancaf779-boop/-Max-Geld-Generation",

@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to MaxGeld Skills are documented here.
+All notable changes to Maxforge Lab are documented here.
 
 ## [1.0.0] — 2026-07-02
 

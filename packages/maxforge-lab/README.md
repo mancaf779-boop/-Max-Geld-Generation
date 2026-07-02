@@ -1,11 +1,22 @@
-# MaxGeld Skills
+# Maxforge Lab
 
-**The research-to-execution skill set for coding agents.** Four composable
+**AI tooling, forged for business.** Maxforge Lab builds and hardens
+production-grade agent capabilities — from packaged skills to bespoke,
+high-end AI solutions for teams that need results they can trust.
+
+This repository is the Lab's flagship open toolkit: **the research-to-execution
+skill set for coding agents.** Four composable
 [agent skills](https://agentskills.io/specification) that take an open-ended
 goal from *not knowing* → *knowing* → *a written plan* → *verified action*.
 
 Built for Claude Code (and other skill-aware harnesses). Each skill is a
-behavior-shaping reference the agent loads on demand.
+behavior-shaping reference the agent loads on demand — and every one ships with
+a documented eval so you know it works before you bet a workflow on it.
+
+> **Working with Maxforge Lab.** The skills here are free and MIT-licensed. If
+> you need custom skills, agent workflows tuned to your domain, or a hardened
+> deployment on your own model stack, that's the Lab's high-end engagement tier
+> — reach out at mancaf779@gmail.com.
 
 ---
 
@@ -31,11 +42,11 @@ From this repository:
 /plugin marketplace add mancaf779-boop/-Max-Geld-Generation
 
 # Install the plugin
-/plugin install maxgeld-skills
+/plugin install maxforge-lab
 ```
 
 Or, for local development, add the marketplace from a checkout path that
-contains `packages/maxgeld-skills/.claude-plugin/marketplace.json`.
+contains `packages/maxforge-lab/.claude-plugin/marketplace.json`.
 
 Once installed, the skills auto-surface by their `description` when a matching
 task appears — you don't invoke them by hand.
@@ -86,7 +97,7 @@ degrade to plain guidance.
 
 ## License & attribution
 
-MaxGeld Skills is © 2026 MaxGeld (mancaf779), released under the
+Maxforge Lab is © 2026 Maxforge Lab (mancaf779), released under the
 [MIT License](LICENSE). The four skills and the eval are original work.
 
 The *skill-authoring methodology* (RED→GREEN→REFACTOR for process

@@ -1,18 +1,18 @@
 {
-  "name": "maxgeld-skills",
-  "description": "MaxGeld Skills marketplace: the research-to-execution skill set for coding agents",
+  "name": "maxforge-lab",
+  "description": "Maxforge Lab marketplace: the research-to-execution skill set for coding agents",
   "owner": {
-    "name": "MaxGeld",
+    "name": "Maxforge Lab",
     "email": "mancaf779@gmail.com"
   },
   "plugins": [
     {
-      "name": "maxgeld-skills",
+      "name": "maxforge-lab",
       "description": "Agent skills for the full research-to-execution loop: researching topics, analyzing data of every kind, designing step-by-step workflows, and orchestrating tasks into verified action",
       "version": "1.0.0",
       "source": "./",
       "author": {
-        "name": "MaxGeld",
+        "name": "Maxforge Lab",
         "email": "mancaf779@gmail.com"
       }
     }
