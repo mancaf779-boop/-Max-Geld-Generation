@@ -155,10 +155,36 @@ resolved the near-collisions with `writing-plans` / `executing-plans` (both scop
 **Caveat:** this tests description *routing*, not live in-harness auto-trigger via the
 `using-superpowers` bootstrap — that still needs a real installed-plugin test per harness.
 
+## Round 6 — live in-harness auto-trigger (Claude Code)
+
+The earlier discovery test only checked description *routing*. This round tested the real thing:
+headless `claude -p --plugin-dir packages/maxforge-lab` sessions (Claude Code v2.1.198), one
+matching task per skill (without naming the skill), inspecting `tool_use` events for whether the
+Skill tool auto-invoked the right skill.
+
+| Skill | Bare plugin | With shipped bootstrap (SessionStart hook) |
+|-------|:---:|:---:|
+| analyzing-data | ✅ fired | ✅ |
+| designing-workflows | ✅ fired | ✅ |
+| researching-topics | ❌ answered directly | ✅ fires |
+| orchestrating-tasks | ❌ went into direct-action/refusal | ✅ fires on an executable plan |
+
+**Finding:** bare skills auto-trigger *inconsistently* — the two that produce a distinct artifact
+fired; "research this" and "execute this" the model just did directly. This is exactly what the
+Superpowers docs warn about: skills need a session-start **bootstrap** that tells the agent to
+invoke applicable skills before acting.
+
+**Fix (shipped):** added `skills/using-maxforge/SKILL.md` + a `hooks/` SessionStart hook that injects
+the bootstrap (mirroring Superpowers' mechanism). With it, all four fire. One honest nuance:
+`orchestrating-tasks` correctly *declines* to "execute" a plan that references infrastructure which
+doesn't exist (it investigates and refuses) — that is correct behavior, not a trigger failure; on a
+genuinely executable plan it fires and creates tracked tasks. This closes the previously-open
+"auto-trigger only proxy-tested" gap.
+
 ## Outcome
 
-All four skills have been through maximum-pressure testing on two model tiers, and the two that
-failed were re-verified across three additional domains each:
+All four skills have been through maximum-pressure testing on two model tiers, re-verified across
+multiple domains, and confirmed to auto-trigger in a live Claude Code session (with the bootstrap):
 
 - **designing-workflows, orchestrating-tasks** — held under maximum pressure and across 3 domains
   each; no changes.
@@ -191,8 +217,9 @@ weaker-model (Haiku 4.5), a discovery/routing test, and re-verifications.
 - **Discipline vs. judgment.** The skills enforce *process/honesty* discipline reliably, including on
   a weaker model. They do NOT improve a weaker model's *substantive* judgment (see the Haiku Postgres
   vs. Mongo result). Choose the model tier accordingly.
-- **Auto-trigger is only proxy-tested.** Testing loaded skills by reading the file, and the routing
-  test used descriptions only. Live in-harness auto-trigger via the `using-superpowers` bootstrap
-  still needs a real installed-plugin test per harness before shipping.
+- **Auto-trigger validated live on Claude Code** (round 6) with the shipped `using-maxforge`
+  bootstrap: all four fire. Other harnesses (Cursor, Codex, Copilot CLI, etc.) still need their own
+  per-harness confirmation before shipping there — the hook emits the right context shape for each,
+  but that hasn't been run end-to-end outside Claude Code.
 - A subagent overstepped its scenario and committed an `analysis/` file to the repo during an early
   round; that commit was reverted and all later test prompts forbid file writes.

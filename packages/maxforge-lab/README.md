@@ -33,9 +33,24 @@ They chain into one pipeline — see [`docs/research-to-execution-workflow.md`](
 
 > **Research → Analyze → Plan → Execute**
 
-## Install (Claude Code)
+Plus a fifth, invisible skill — **`using-maxforge`** — the bootstrap that makes the other four
+*reliably auto-trigger*. It loads at session start via a hook and tells the agent to invoke the
+right skill before acting. Without a bootstrap, bare skills fire inconsistently (measured: 2 of 4);
+with it, all four fire. See the eval report for the numbers.
 
-From this repository:
+## Quickstart (try it in 30 seconds)
+
+No install needed — load the plugin into a one-off headless session:
+
+```bash
+claude -p "Analyze this: month,price,units | Jan,10,100 | Feb,12,90 | Mar,15,70. Does raising price hurt sales?" \
+  --plugin-dir packages/maxforge-lab
+```
+
+The agent auto-invokes `analyzing-data`, profiles the data, and refuses to call correlation
+causation — that's the skill working.
+
+## Install (Claude Code)
 
 ```bash
 # Register the marketplace (point at wherever you host this package)
@@ -48,8 +63,8 @@ From this repository:
 Or, for local development, add the marketplace from a checkout path that
 contains `packages/maxforge-lab/.claude-plugin/marketplace.json`.
 
-Once installed, the skills auto-surface by their `description` when a matching
-task appears — you don't invoke them by hand.
+The `using-maxforge` SessionStart hook loads automatically once the plugin is installed, so the
+skills auto-trigger on matching tasks — you don't invoke them by hand.
 
 ## How it works
 
@@ -79,8 +94,9 @@ run with real subagents under pressure. Full record in
 - The skills enforce **process/honesty discipline** reliably, including on a
   weaker model — but they do **not** upgrade a weaker model's *substantive
   judgment*. Choose your model tier where answer quality matters.
-- **Auto-trigger is only proxy-tested** (description routing), not live
-  in-harness. Test real auto-trigger per harness before relying on it.
+- **Auto-trigger is validated live on Claude Code** with the bootstrap (all
+  four fire). Other harnesses (Cursor, Codex, Copilot CLI) need their own
+  per-harness confirmation.
 - Nothing here replaces monitoring real usage once deployed.
 
 ## Interoperates with Superpowers (optional)
@@ -95,10 +111,21 @@ as optional sub-skills. If Superpowers is also installed, those references
 light up; if not, the skills still stand on their own — the cross-references
 degrade to plain guidance.
 
+## Work with Maxforge Lab
+
+| Tier | What you get | For |
+|------|--------------|-----|
+| **Open** (free, MIT) | This toolkit: the 4 skills + bootstrap, docs, and eval. Use it, fork it, ship it. | Teams who want a solid, tested starting point |
+| **Pro** | A curated pack of domain-tuned skills + the bootstrap, packaged and version-managed for your stack, with the eval harness to keep them honest as models change | Businesses standardizing how their agents work |
+| **Lab** (high-end) | Bespoke skills and agent workflows built and pressure-tested for your domain, wired into your model stack and harness, with an eval suite and a hardening SLA | Companies betting real workflows on agents |
+
+Every tier ships with an eval — you see the RED→GREEN→REFACTOR evidence, not
+just claims. Start a conversation: **mancaf779@gmail.com**.
+
 ## License & attribution
 
 Maxforge Lab is © 2026 Maxforge Lab (mancaf779), released under the
-[MIT License](LICENSE). The four skills and the eval are original work.
+[MIT License](LICENSE). The five skills and the eval are original work.
 
 The *skill-authoring methodology* (RED→GREEN→REFACTOR for process
 documentation, the SKILL.md format, rationalization-table / red-flags
