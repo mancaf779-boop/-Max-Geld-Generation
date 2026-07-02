@@ -5,6 +5,16 @@ description: Research the most-searched topic in one of the epubflow.xyz niches 
 
 # New-Guide Workflow: Research → Pick → Write → Build → Ship
 
+## Auto mode
+
+When asked to "run the guide workflow" (voll-automatisch): invoke the
+`market-research` skill first (it writes `research/YYYY-MM-DD-report.md`
+and names a winner), take the winner without asking, then run Steps 3–6
+below to the finished PDF + Leseprobe, commit, push, and send the files.
+Steps 1–2 below are the manual fallback when market-research is not used.
+Guard: if the two existing products are not yet live/selling, remind the
+user that launch beats a third product — build only if they confirm.
+
 Produces a new digital PDF product for the FOKUS-OS brand (epubflow.xyz).
 
 ## Step 1 — Keyword research
