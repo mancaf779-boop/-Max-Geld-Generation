@@ -80,7 +80,7 @@ observable result that lets the next phase begin.
 ## Risks / open questions
 
 - Skills authored to Superpowers **format** conventions and put through a first
-  RED→GREEN→REFACTOR subagent eval pass (see `docs/evals/2026-07-02-new-skills-eval.md`).
+  RED→GREEN→REFACTOR subagent eval pass (see `docs/skill-evals/2026-07-02-new-skills-eval.md`).
   Research/workflow/orchestration validated; `analyzing-data` had a real
   causation-under-pressure failure that was refactored and re-verified. This is a first
   hardening pass, not the full multi-iteration campaign the `writing-skills` Iron Law
