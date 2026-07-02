@@ -79,11 +79,13 @@ observable result that lets the next phase begin.
 
 ## Risks / open questions
 
-- Skills authored to Superpowers **format** conventions but not yet run through the
-  full RED→GREEN→REFACTOR subagent pressure-testing eval loop the `writing-skills`
-  Iron Law requires before upstream deployment. Treat as working drafts; validate with
-  `superpowers:writing-skills` before relying on them under pressure or contributing
-  them upstream.
+- Skills authored to Superpowers **format** conventions and put through a first
+  RED→GREEN→REFACTOR subagent eval pass (see `docs/evals/2026-07-02-new-skills-eval.md`).
+  Research/workflow/orchestration validated; `analyzing-data` had a real
+  causation-under-pressure failure that was refactored and re-verified. This is a first
+  hardening pass, not the full multi-iteration campaign the `writing-skills` Iron Law
+  describes for upstream deployment — run more scenarios with `superpowers:writing-skills`
+  before relying on them under heavy pressure or contributing them upstream.
 - Overlap with existing `writing-plans` / `executing-plans`: the new skills cross-
   reference rather than replace them and point to the more specific skill for code
   implementation work.
