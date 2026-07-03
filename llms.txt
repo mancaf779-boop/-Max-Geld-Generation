@@ -1,0 +1,32 @@
+# Maxforge Lab
+
+> The research-to-execution skill set for coding agents. Four composable [agent skills](https://agentskills.io/specification) — plus an auto-trigger bootstrap — that take an open-ended goal from *not knowing* → *knowing* → *a written plan* → *verified action*. Built for Claude Code and other skill-aware harnesses, MIT-licensed, and shipped with a documented eval so you know each skill works before you bet a workflow on it.
+
+Each skill is plain Markdown with YAML frontmatter (`name` + `description`). The agent reads the descriptions to decide which skill applies, then loads the full body when it acts — there is no runtime, no dependency, and nothing to configure. The `using-maxforge` bootstrap loads at session start via a hook and makes the other four reliably auto-trigger.
+
+The four skills chain into one pipeline: **Research → Analyze → Plan → Execute**.
+
+## Skills
+
+- [researching-topics](https://github.com/mancaf779-boop/-Max-Geld-Generation/blob/main/skills/researching-topics/SKILL.md): Gather, evaluate, and synthesize information on a question before acting — corroborate across independent sources, cite, and state confidence plus the key assumption even under "no hedging" pressure.
+- [analyzing-data](https://github.com/mancaf779-boop/-Max-Geld-Generation/blob/main/skills/analyzing-data/SKILL.md): Extract insight from data of any kind (CSV/JSON/logs/metrics/survey text) — descriptive, diagnostic, predictive, or qualitative — profiling and cleaning first, and never mistaking correlation for causation, even under pressure.
+- [designing-workflows](https://github.com/mancaf779-boop/-Max-Geld-Generation/blob/main/skills/designing-workflows/SKILL.md): Turn a goal or a pile of findings into an ordered, single-action-per-step plan with a done-criterion for each step, dependency ordering, parallel markers, checkpoints, and failure paths.
+- [orchestrating-tasks](https://github.com/mancaf779-boop/-Max-Geld-Generation/blob/main/skills/orchestrating-tasks/SKILL.md): Turn a plan into tracked tasks and execute every one — execute → verify the result → then mark done — stopping before any destructive, irreversible, or outward-facing action.
+- [using-maxforge](https://github.com/mancaf779-boop/-Max-Geld-Generation/blob/main/skills/using-maxforge/SKILL.md): The invisible bootstrap. Loads at session start and requires the agent to invoke the right Maxforge skill before responding or acting, so the other four fire reliably.
+
+## Documentation
+
+- [README](https://github.com/mancaf779-boop/-Max-Geld-Generation/blob/main/README.md): Overview, quickstart, install instructions, how it works, and the Open/Pro/Lab engagement tiers.
+- [Research-to-execution workflow](https://github.com/mancaf779-boop/-Max-Geld-Generation/blob/main/docs/research-to-execution-workflow.md): How the four skills chain into a single Research → Analyze → Plan → Execute pipeline.
+- [Eval report](https://github.com/mancaf779-boop/-Max-Geld-Generation/blob/main/docs/eval-report.md): The RED→GREEN→REFACTOR eval record — ~30 subagent runs across baseline/treatment, maximum-pressure, cross-domain, and weaker-model rounds.
+- [CHANGELOG](https://github.com/mancaf779-boop/-Max-Geld-Generation/blob/main/CHANGELOG.md): Version history for the plugin package.
+
+## Plugin
+
+- [plugin.json](https://github.com/mancaf779-boop/-Max-Geld-Generation/blob/main/.claude-plugin/plugin.json): Claude Code plugin manifest (name, version, keywords, repository).
+- [marketplace.json](https://github.com/mancaf779-boop/-Max-Geld-Generation/blob/main/.claude-plugin/marketplace.json): Marketplace definition used by `/plugin marketplace add`.
+
+## Optional
+
+- [LICENSE](https://github.com/mancaf779-boop/-Max-Geld-Generation/blob/main/LICENSE): MIT License.
+- [Superpowers](https://github.com/obra/superpowers): Optional companion skill library that Maxforge skills cross-reference for heavy-lifting sub-skills.
