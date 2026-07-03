@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maxforge Lab — Agent skills, forged for business</title>
+<meta name="description" content="Four composable agent skills that take a coding agent from not knowing to verified action: researching-topics, analyzing-data, designing-workflows, orchestrating-tasks. MIT-licensed, eval-backed.">
+<style>
+  :root{
+    /* light — "forge ash / daytime blueprint" */
+    --ground:#e9e4db;
+    --panel:#f3efe8;
+    --panel-2:#e0d9cc;
+    --ink:#1b1610;
+    --ink-2:#4c4338;
+    --ink-3:#7c7264;
+    --line:#d5cdbe;
+    --line-2:#c6bcaa;
+    --forge:#c8531a;
+    --forge-2:#e26520;
+    --ember:#cf8a1e;
+    --quench:#2c6b98;
+    --quench-2:#3f80ae;
+    --cold:#6b7681;
+    --focus:#c8531a;
+    --shadow:rgba(40,28,14,.14);
+    --grain:.015;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --ground:#15120e;
+      --panel:#1d1913;
+      --panel-2:#251f17;
+      --ink:#f1eae0;
+      --ink-2:#bcae9d;
+      --ink-3:#867b6d;
+      --line:#332c21;
+      --line-2:#463c2d;
+      --forge:#f0742a;
+      --forge-2:#ff8636;
+      --ember:#f6b23e;
+      --quench:#5a9ecb;
+      --quench-2:#7ab6dd;
+      --cold:#8c98a4;
+      --focus:#ff8636;
+      --shadow:rgba(0,0,0,.5);
+      --grain:.03;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#15120e;--panel:#1d1913;--panel-2:#251f17;
+    --ink:#f1eae0;--ink-2:#bcae9d;--ink-3:#867b6d;
+    --line:#332c21;--line-2:#463c2d;
+    --forge:#f0742a;--forge-2:#ff8636;--ember:#f6b23e;
+    --quench:#5a9ecb;--quench-2:#7ab6dd;--cold:#8c98a4;
+    --focus:#ff8636;--shadow:rgba(0,0,0,.5);--grain:.03;
+  }
+  :root[data-theme="light"]{
+    --ground:#e9e4db;--panel:#f3efe8;--panel-2:#e0d9cc;
+    --ink:#1b1610;--ink-2:#4c4338;--ink-3:#7c7264;
+    --line:#d5cdbe;--line-2:#c6bcaa;
+    --forge:#c8531a;--forge-2:#e26520;--ember:#cf8a1e;
+    --quench:#2c6b98;--quench-2:#3f80ae;--cold:#6b7681;
+    --focus:#c8531a;--shadow:rgba(40,28,14,.14);--grain:.015;
+  }
+
+  *{box-sizing:border-box}
+
+  :root{
+    --mono:ui-monospace,"SF Mono","Cascadia Code","Segoe UI Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --wrap:1080px;
+  }
+
+  body{margin:0}
+
+  .page{
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--sans);
+    font-size:17px;
+    line-height:1.62;
+    -webkit-font-smoothing:antialiased;
+    position:relative;
+    overflow-x:hidden;
+  }
+  /* forged-metal grain */
+  .page::before{
+    content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
+    opacity:var(--grain);mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .wrap{max-width:var(--wrap);margin:0 auto;padding:0 28px;position:relative;z-index:1}
+
+  a{color:inherit}
+
+  .mono{font-family:var(--mono)}
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--ink-3);
+    display:inline-flex;align-items:center;gap:.6em;
+  }
+  .eyebrow::before{
+    content:"";width:22px;height:1px;background:var(--forge);
+    display:inline-block;
+  }
+  .tnum{font-variant-numeric:tabular-nums}
+
+  /* ---------- masthead ---------- */
+  header.mast{
+    border-bottom:1px solid var(--line);
+    position:sticky;top:0;z-index:20;
+    background:color-mix(in srgb,var(--ground) 86%,transparent);
+    backdrop-filter:blur(10px);
+  }
+  .mast .wrap{display:flex;align-items:center;justify-content:space-between;height:60px;gap:16px}
+  .brand{display:flex;align-items:center;gap:11px;font-family:var(--mono);font-weight:700;letter-spacing:.02em}
+  .brand .mark{
+    width:22px;height:22px;flex:none;border-radius:3px;
+    background:
+      radial-gradient(circle at 50% 118%, var(--ember), var(--forge-2) 42%, #7a1d05 84%);
+    box-shadow:0 0 14px -2px var(--forge);
+    position:relative;
+  }
+  .brand .mark::after{
+    content:"";position:absolute;inset:0;border-radius:3px;
+    box-shadow:inset 0 1px 1px rgba(255,255,255,.4);
+  }
+  .brand small{color:var(--ink-3);font-weight:400;letter-spacing:.14em;font-size:11px;text-transform:uppercase}
+  .mast nav{display:flex;gap:26px;align-items:center;font-family:var(--mono);font-size:13px}
+  .mast nav a{color:var(--ink-2);text-decoration:none;transition:color .18s}
+  .mast nav a:hover{color:var(--forge)}
+  .mast nav a.gh{color:var(--ink);border:1px solid var(--line-2);padding:6px 13px;border-radius:5px}
+  .mast nav a.gh:hover{border-color:var(--forge);color:var(--forge)}
+  @media(max-width:720px){.mast nav .navlink{display:none}}
+
+  /* ---------- hero ---------- */
+  .hero{padding:88px 0 72px;position:relative}
+  .hero .grid{display:grid;grid-template-columns:1fr;gap:40px}
+  .hero h1{
+    font-family:var(--mono);
+    font-weight:700;
+    letter-spacing:-.02em;
+    line-height:1.02;
+    font-size:clamp(42px,8.2vw,86px);
+    margin:20px 0 0;
+    text-wrap:balance;
+  }
+  .hero h1 .heat{
+    background:linear-gradient(96deg,var(--cold) 0%,var(--forge) 44%,var(--forge-2) 66%,var(--ember) 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero .lede{
+    font-size:clamp(18px,2.3vw,21px);
+    color:var(--ink-2);
+    max-width:36em;
+    margin:26px 0 0;
+    line-height:1.55;
+  }
+  .hero .lede b{color:var(--ink);font-weight:600}
+
+  /* animated forge line */
+  .forgeline{margin:40px 0 4px;height:4px;border-radius:4px;position:relative;overflow:hidden;background:var(--panel-2)}
+  .forgeline i{
+    position:absolute;inset:0;
+    background:linear-gradient(90deg,transparent,var(--cold),var(--forge),var(--ember),var(--forge),var(--cold),transparent);
+    background-size:220% 100%;
+    animation:heatflow 7s linear infinite;
+  }
+  @keyframes heatflow{from{background-position:120% 0}to{background-position:-120% 0}}
+
+  .cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:34px;align-items:center}
+  .btn{
+    font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:.01em;
+    text-decoration:none;padding:13px 22px;border-radius:7px;
+    display:inline-flex;align-items:center;gap:9px;transition:transform .16s,box-shadow .2s,background .2s;
+  }
+  .btn.primary{
+    color:#fff;
+    background:linear-gradient(180deg,var(--forge-2),var(--forge));
+    box-shadow:0 6px 20px -8px var(--forge),inset 0 1px 0 rgba(255,255,255,.28);
+  }
+  .btn.primary:hover{transform:translateY(-2px);box-shadow:0 12px 26px -10px var(--forge),inset 0 1px 0 rgba(255,255,255,.3)}
+  .btn.ghost{color:var(--ink);border:1px solid var(--line-2);background:var(--panel)}
+  .btn.ghost:hover{border-color:var(--forge);color:var(--forge);transform:translateY(-2px)}
+
+  .hero .specrow{
+    display:flex;flex-wrap:wrap;gap:28px 40px;margin-top:52px;
+    padding-top:26px;border-top:1px solid var(--line);
+    font-family:var(--mono);
+  }
+  .hero .specrow div{display:flex;flex-direction:column;gap:3px}
+  .hero .specrow b{font-size:23px;letter-spacing:-.01em}
+  .hero .specrow span{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+
+  /* ---------- section frame ---------- */
+  section{padding:78px 0;border-top:1px solid var(--line);position:relative}
+  .sec-head{max-width:40em;margin-bottom:44px}
+  .sec-head h2{
+    font-family:var(--mono);font-weight:700;letter-spacing:-.015em;
+    font-size:clamp(26px,3.6vw,36px);margin:14px 0 0;line-height:1.12;text-wrap:balance;
+  }
+  .sec-head p{color:var(--ink-2);margin:16px 0 0;font-size:18px}
+
+  /* ---------- pipeline: heat gauge ---------- */
+  .pipe{display:grid;grid-template-columns:1fr;gap:0}
+  .stage{
+    display:grid;grid-template-columns:64px 1fr;gap:24px;
+    padding:26px 0;border-top:1px dashed var(--line-2);position:relative;
+  }
+  .stage:first-child{border-top:none}
+  .stage .temp{position:relative;display:flex;flex-direction:column;align-items:center}
+  .stage .dot{
+    width:20px;height:20px;border-radius:50%;flex:none;margin-top:5px;
+    background:var(--sc);
+    box-shadow:0 0 0 5px color-mix(in srgb,var(--sc) 22%,transparent),0 0 18px -2px var(--sc);
+  }
+  .stage .rail{width:2px;flex:1;margin-top:8px;background:linear-gradient(var(--sc),transparent)}
+  .stage:last-child .rail{display:none}
+  .stage .deg{font-family:var(--mono);font-size:11px;color:var(--ink-3);margin-top:9px;letter-spacing:.04em}
+  .stage .body h3{
+    font-family:var(--mono);font-size:20px;font-weight:700;margin:0;display:flex;align-items:baseline;gap:12px;
+  }
+  .stage .body h3 em{font-style:normal;color:var(--sc);font-size:13px;letter-spacing:.06em}
+  .stage .body .role{color:var(--ink-3);font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin:2px 0 10px}
+  .stage .body p{margin:0;color:var(--ink-2);max-width:52em}
+  .stage .body p b{color:var(--ink);font-weight:600}
+
+  /* ---------- skills spec cards ---------- */
+  .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+  @media(max-width:760px){.cards{grid-template-columns:1fr}}
+  .card{
+    background:var(--panel);border:1px solid var(--line);border-radius:11px;
+    padding:24px 24px 22px;position:relative;overflow:hidden;
+    transition:border-color .2s,transform .2s,box-shadow .2s;
+  }
+  .card::before{
+    content:"";position:absolute;left:0;top:0;bottom:0;width:3px;
+    background:linear-gradient(var(--forge-2),var(--forge));opacity:.85;
+  }
+  .card:hover{transform:translateY(-3px);border-color:var(--line-2);box-shadow:0 16px 34px -22px var(--shadow)}
+  .card .cnum{font-family:var(--mono);font-size:12px;color:var(--ink-3);letter-spacing:.1em}
+  .card h3{font-family:var(--mono);font-size:19px;font-weight:700;margin:8px 0 0}
+  .card .when{color:var(--ink-2);margin:10px 0 16px;font-size:15.5px}
+  .card .enforce{
+    font-family:var(--mono);font-size:13px;line-height:1.55;color:var(--ink);
+    border-top:1px solid var(--line);padding-top:14px;
+  }
+  .card .enforce span{color:var(--forge);display:block;font-size:11px;letter-spacing:.14em;text-transform:uppercase;margin-bottom:6px;color:var(--ink-3)}
+
+  .bootstrap{
+    margin-top:18px;background:
+      linear-gradient(var(--panel),var(--panel)) padding-box,
+      linear-gradient(120deg,var(--forge),var(--ember)) border-box;
+    border:1px solid transparent;border-radius:11px;padding:22px 24px;
+    display:grid;grid-template-columns:auto 1fr;gap:20px;align-items:center;
+  }
+  .bootstrap .badge{
+    font-family:var(--mono);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--forge);border:1px dashed var(--forge);border-radius:6px;padding:8px 12px;white-space:nowrap;
+  }
+  .bootstrap p{margin:0;color:var(--ink-2);font-size:15.5px}
+  .bootstrap p b{color:var(--ink);font-weight:600}
+  @media(max-width:600px){.bootstrap{grid-template-columns:1fr}}
+
+  /* ---------- eval / quench section ---------- */
+  .quenchsec{--forge:var(--quench);--forge-2:var(--quench-2)}
+  .quenchsec .eyebrow::before{background:var(--quench)}
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:32px}
+  @media(max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{
+    background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:20px 18px;
+  }
+  .stat b{font-family:var(--mono);font-size:32px;font-weight:700;letter-spacing:-.02em;display:block;color:var(--quench)}
+  .stat b small{font-size:16px;color:var(--ink-3);font-weight:500}
+  .stat span{font-size:13px;color:var(--ink-2);display:block;margin-top:6px;line-height:1.4}
+
+  .fire{
+    background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:26px 26px 24px;
+    display:grid;grid-template-columns:1fr;gap:18px;
+  }
+  .fire h4{font-family:var(--mono);font-size:14px;margin:0;letter-spacing:.02em;color:var(--ink-2);font-weight:600}
+  .bar{display:grid;grid-template-columns:150px 1fr 58px;align-items:center;gap:14px;font-family:var(--mono);font-size:13px}
+  .bar .lab{color:var(--ink-2)}
+  .bar .track{height:26px;border-radius:5px;background:var(--panel-2);overflow:hidden;position:relative}
+  .bar .fill{height:100%;border-radius:5px;width:var(--w);transition:width .9s cubic-bezier(.2,.7,.2,1)}
+  .bar .fill.cold{background:linear-gradient(90deg,#6b7681,#8b97a3)}
+  .bar .fill.hot{background:linear-gradient(90deg,var(--quench),var(--quench-2))}
+  .bar .val{text-align:right;font-weight:700;color:var(--ink)}
+  .fire .note{font-size:13px;color:var(--ink-3);margin:0;font-family:var(--mono)}
+
+  .caveat{
+    margin-top:20px;border-left:2px solid var(--line-2);padding:4px 0 4px 18px;
+    color:var(--ink-2);font-size:14.5px;
+  }
+  .caveat b{color:var(--ink);font-weight:600}
+
+  /* ---------- install ---------- */
+  .install{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:start}
+  @media(max-width:800px){.install{grid-template-columns:1fr}}
+  .terminal{
+    background:#0f0d0a;border:1px solid var(--line-2);border-radius:11px;overflow:hidden;
+    box-shadow:0 24px 50px -30px var(--shadow);
+  }
+  .terminal .tbar{display:flex;align-items:center;gap:8px;padding:12px 16px;border-bottom:1px solid #241f18;background:#17130e}
+  .terminal .tbar i{width:11px;height:11px;border-radius:50%;display:block}
+  .terminal .tbar i:nth-child(1){background:#e05a3a}
+  .terminal .tbar i:nth-child(2){background:#e0a93a}
+  .terminal .tbar i:nth-child(3){background:#4a9d5b}
+  .terminal .tbar span{margin-left:8px;font-family:var(--mono);font-size:12px;color:#7c7264}
+  .terminal pre{margin:0;padding:20px 18px;font-family:var(--mono);font-size:13.5px;line-height:1.9;color:#e9e0d2;overflow-x:auto}
+  .terminal .c{color:#6f6455}
+  .terminal .cmd{color:#f6b23e}
+  .terminal .arg{color:#8fbfe0}
+  .install .txt h2{font-family:var(--mono);font-weight:700;font-size:clamp(24px,3.4vw,32px);margin:14px 0 0;letter-spacing:-.01em}
+  .install .txt p{color:var(--ink-2);margin:16px 0 0}
+  .install .txt p b{color:var(--ink)}
+
+  /* ---------- tiers ---------- */
+  .tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  @media(max-width:800px){.tiers{grid-template-columns:1fr}}
+  .tier{
+    background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:26px 24px;position:relative;
+    display:flex;flex-direction:column;gap:14px;
+  }
+  .tier.feat{border-color:var(--forge);box-shadow:0 20px 44px -30px var(--forge)}
+  .tier .th{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+  .tier .name{font-family:var(--mono);font-size:19px;font-weight:700}
+  .tier .hard{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+  .tier.feat .hard{color:var(--forge)}
+  .tier .heatgauge{height:6px;border-radius:6px;background:var(--panel-2);overflow:hidden}
+  .tier .heatgauge i{display:block;height:100%;border-radius:6px}
+  .tier .desc{color:var(--ink-2);font-size:14.5px;margin:0}
+  .tier .who{font-family:var(--mono);font-size:12px;color:var(--ink-3);border-top:1px solid var(--line);padding-top:14px;margin-top:auto}
+
+  /* ---------- footer ---------- */
+  footer{border-top:1px solid var(--line);padding:52px 0 60px}
+  .foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:26px}
+  .foot .lockup{max-width:30em}
+  .foot .lockup p{color:var(--ink-2);margin:12px 0 0;font-size:15px}
+  .foot .contact{font-family:var(--mono);font-size:14px;display:flex;flex-direction:column;gap:10px}
+  .foot .contact a{color:var(--forge);text-decoration:none}
+  .foot .contact a:hover{text-decoration:underline}
+  .foot .contact .k{color:var(--ink-3);font-size:11px;letter-spacing:.14em;text-transform:uppercase}
+  .foot .lic{font-family:var(--mono);font-size:12px;color:var(--ink-3);margin-top:30px;width:100%;border-top:1px solid var(--line);padding-top:22px}
+
+  a:focus-visible,.btn:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:4px}
+
+  @media(prefers-reduced-motion:reduce){
+    .forgeline i{animation:none;background-position:0 0}
+    .card,.btn,.tier{transition:none}
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="mast">
+    <div class="wrap">
+      <div class="brand">
+        <span class="mark" aria-hidden="true"></span>
+        Maxforge Lab
+        <small>est. 2026</small>
+      </div>
+      <nav>
+        <a class="navlink" href="#pipeline">Pipeline</a>
+        <a class="navlink" href="#skills">Skills</a>
+        <a class="navlink" href="#eval">Eval</a>
+        <a class="navlink" href="#tiers">Work with us</a>
+        <a class="gh" href="https://github.com/mancaf779-boop/-Max-Geld-Generation">GitHub ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" style="border-top:none">
+    <div class="wrap">
+      <span class="eyebrow">AI tooling · forged for business</span>
+      <h1>Agent skills, <span class="heat">heated&nbsp;and&nbsp;hardened</span> until they hold under pressure.</h1>
+      <p class="lede">
+        Four composable skills that take a coding agent from <b>not knowing</b> →
+        <b>knowing</b> → <b>a written plan</b> → <b>verified action</b>. Plain Markdown,
+        no runtime, nothing to configure — and every one ships with a documented eval,
+        so you know it works before you bet a workflow on it.
+      </p>
+
+      <div class="forgeline" aria-hidden="true"><i></i></div>
+
+      <div class="cta">
+        <a class="btn primary" href="#install">Install the plugin →</a>
+        <a class="btn ghost" href="https://github.com/mancaf779-boop/-Max-Geld-Generation">View source</a>
+      </div>
+
+      <div class="specrow">
+        <div><b class="tnum">4+1</b><span>Skills & bootstrap</span></div>
+        <div><b class="tnum">~30</b><span>Subagent eval runs</span></div>
+        <div><b class="tnum">2</b><span>Model tiers held</span></div>
+        <div><b>MIT</b><span>Open &amp; free</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PIPELINE -->
+  <section id="pipeline">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">The forge sequence</span>
+        <h2>Cold iron doesn't become a tool in one blow. Neither does an answer.</h2>
+        <p>Each skill is a stage in one pipeline — and like metal in a forge, the work
+          climbs in temperature: raw and grey at the start, white-hot and finished at the end.</p>
+      </div>
+
+      <div class="pipe">
+        <div class="stage" style="--sc:var(--cold)">
+          <div class="temp"><span class="dot"></span><span class="rail"></span><span class="deg">cold&nbsp;iron</span></div>
+          <div class="body">
+            <h3>researching-topics <em>01</em></h3>
+            <div class="role">Not knowing → knowing</div>
+            <p>Frame the question, gather from independent sources in parallel, corroborate,
+              and synthesize. It <b>states confidence and the key assumption you're betting on</b> —
+              even when you demand a confident answer with no hedging.</p>
+          </div>
+        </div>
+
+        <div class="stage" style="--sc:#c14a1e">
+          <div class="temp"><span class="dot"></span><span class="rail"></span><span class="deg">dull&nbsp;red</span></div>
+          <div class="body">
+            <h3>analyzing-data <em>02</em></h3>
+            <div class="role">Evidence → insight</div>
+            <p>Profile, clean with a stated rule, analyze, validate, report — across data of any
+              kind. <b>Correlation is never causation</b>, and that rule does not bend under time
+              or authority pressure.</p>
+          </div>
+        </div>
+
+        <div class="stage" style="--sc:var(--forge-2)">
+          <div class="temp"><span class="dot"></span><span class="rail"></span><span class="deg">orange</span></div>
+          <div class="body">
+            <h3>designing-workflows <em>03</em></h3>
+            <div class="role">Findings → a plan</div>
+            <p>Turn a goal into single-action steps ordered by real dependency, each with a
+              <b>done-criterion</b>, parallel markers, checkpoints, and failure paths — executable
+              by someone with no context and no judgement.</p>
+          </div>
+        </div>
+
+        <div class="stage" style="--sc:var(--ember)">
+          <div class="temp"><span class="dot"></span><span class="rail"></span><span class="deg">white-hot</span></div>
+          <div class="body">
+            <h3>orchestrating-tasks <em>04</em></h3>
+            <div class="role">Plan → verified action</div>
+            <p>Every step becomes a tracked task: <b>execute → verify the result → then mark done</b>.
+              Taking action means observing the outcome, not assuming it — and it stops before any
+              destructive or outward-facing move.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">The toolkit</span>
+        <h2>Each skill is a forged tool with a spec, not a suggestion.</h2>
+        <p>Plain Markdown with a name and a description. The agent reads the descriptions to
+          decide what applies, then loads the full body when it acts.</p>
+      </div>
+
+      <div class="cards">
+        <div class="card">
+          <div class="cnum">TOOL 01 · research</div>
+          <h3>researching-topics</h3>
+          <p class="when">Gather, evaluate, and synthesize before acting — literature reviews,
+            market scans, technical spikes, “look into X.”</p>
+          <div class="enforce"><span>What it enforces</span>
+            Answer a specific question with evidence you can cite and defend — never a pile of tabs.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cnum">TOOL 02 · analyze</div>
+          <h3>analyzing-data</h3>
+          <p class="when">CSV, JSON, logs, metrics, survey text — descriptive, diagnostic,
+            predictive, or qualitative insight.</p>
+          <div class="enforce"><span>What it enforces</span>
+            Never run a computation until you know which decision it informs. Correlation ≠ causation.
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cnum">TOOL 03 · plan</div>
+          <h3>designing-workflows</h3>
+          <p class="when">Turn a goal or a pile of findings into an ordered, executable plan a
+            human or agent can run without further questions.</p>
+          <div class="enforce"><span>What it enforces</span>
+            If a step needs you to explain it, rewrite the step. Every step has a testable “done.”
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="cnum">TOOL 04 · execute</div>
+          <h3>orchestrating-tasks</h3>
+          <p class="when">Turn a plan into concrete tasks and actually do the work — creating,
+            executing, verifying, and driving to done.</p>
+          <div class="enforce"><span>What it enforces</span>
+            Execute, verify, then close — one task before the next. Stop before irreversible actions.
+          </div>
+        </div>
+      </div>
+
+      <div class="bootstrap">
+        <span class="badge">+1 · invisible</span>
+        <p><b>using-maxforge</b> — the bootstrap. It loads at session start via a hook and tells the
+          agent to invoke the right skill <b>before</b> acting. Without it, bare skills fire
+          inconsistently (measured: 2 of 4). With it, all four fire.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EVAL -->
+  <section id="eval" class="quenchsec">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">The quench · tested, not vibes</span>
+        <h2>Steel is hardened by quenching. These skills were hardened by RED → GREEN → REFACTOR.</h2>
+        <p>Watch an agent fail without the skill, write the skill, close the loopholes — run with
+          real subagents under pressure. The full record lives in the eval report.</p>
+      </div>
+
+      <div class="stats">
+        <div class="stat"><b class="tnum">~30</b><span>Paired baseline / treatment, max-pressure, cross-domain &amp; weaker-model runs</span></div>
+        <div class="stat"><b class="tnum">2</b><span>Real under-pressure failures caught, refactored &amp; re-verified</span></div>
+        <div class="stat"><b class="tnum">8</b><span>Domains held — medical to finance to legal to ML</span></div>
+        <div class="stat"><b class="tnum">2</b><span>Model tiers — held on Opus- and Haiku-class alike</span></div>
+      </div>
+
+      <div class="fire">
+        <h4>// Auto-trigger reliability — does the right skill fire on its own?</h4>
+        <div class="bar">
+          <span class="lab">Bare skills</span>
+          <span class="track"><span class="fill cold" style="--w:50%"></span></span>
+          <span class="val tnum">2 / 4</span>
+        </div>
+        <div class="bar">
+          <span class="lab">+ bootstrap</span>
+          <span class="track"><span class="fill hot" style="--w:100%"></span></span>
+          <span class="val tnum">4 / 4</span>
+        </div>
+        <p class="note">Validated live on Claude Code. Other harnesses need their own per-harness confirmation.</p>
+      </div>
+
+      <p class="caveat">
+        <b>Read before you ship:</b> the skills enforce process and honesty discipline reliably —
+        even on a weaker model — but they don't upgrade a weaker model's <b>substantive judgement</b>.
+        Choose your model tier where answer quality matters. Nothing here replaces monitoring real usage.
+      </p>
+    </div>
+  </section>
+
+  <!-- INSTALL -->
+  <section id="install">
+    <div class="wrap">
+      <div class="install">
+        <div class="terminal" aria-label="Install commands">
+          <div class="tbar"><i></i><i></i><i></i><span>claude — install</span></div>
+<pre><span class="c"># register the marketplace</span>
+<span class="cmd">/plugin</span> marketplace add <span class="arg">mancaf779-boop/-Max-Geld-Generation</span>
+
+<span class="c"># install the plugin</span>
+<span class="cmd">/plugin</span> install <span class="arg">maxforge-lab</span>
+
+<span class="c"># try it headless, no install</span>
+<span class="cmd">claude</span> -p <span class="arg">"Does raising price hurt sales?"</span> \
+  --plugin-dir .</pre>
+        </div>
+        <div class="txt">
+          <span class="eyebrow">30-second start</span>
+          <h2>Load it, and the skills work by themselves.</h2>
+          <p>The <b>using-maxforge</b> SessionStart hook loads automatically once the plugin is
+            installed, so skills auto-trigger on matching tasks — you don't invoke them by hand.</p>
+          <p>Point that headless command at a pricing question and the agent auto-invokes
+            <b>analyzing-data</b>, profiles the numbers, and refuses to call correlation causation.
+            That's the skill working.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIERS -->
+  <section id="tiers">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Work with Maxforge Lab</span>
+        <h2>The same discipline, tempered to how hard you need it.</h2>
+        <p>Every tier ships with an eval — you see the RED → GREEN → REFACTOR evidence, not just claims.</p>
+      </div>
+
+      <div class="tiers">
+        <div class="tier">
+          <div class="th"><span class="name">Open</span><span class="hard">annealed</span></div>
+          <div class="heatgauge"><i style="width:34%;background:linear-gradient(90deg,#6b7681,#c14a1e)"></i></div>
+          <p class="desc">This toolkit: the four skills + bootstrap, docs, and eval. Free and MIT — use it, fork it, ship it.</p>
+          <div class="who">For teams who want a tested starting point</div>
+        </div>
+
+        <div class="tier">
+          <div class="th"><span class="name">Pro</span><span class="hard">tempered</span></div>
+          <div class="heatgauge"><i style="width:66%;background:linear-gradient(90deg,#c14a1e,var(--forge-2))"></i></div>
+          <p class="desc">A curated pack of domain-tuned skills + bootstrap, packaged and version-managed for your stack, with the eval harness to keep them honest as models change.</p>
+          <div class="who">For businesses standardizing how agents work</div>
+        </div>
+
+        <div class="tier feat">
+          <div class="th"><span class="name">Lab</span><span class="hard">hardened</span></div>
+          <div class="heatgauge"><i style="width:100%;background:linear-gradient(90deg,var(--forge),var(--ember))"></i></div>
+          <p class="desc">Bespoke skills and agent workflows built and pressure-tested for your domain, wired into your model stack and harness, with an eval suite and a hardening SLA.</p>
+          <div class="who">For companies betting real workflows on agents</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div class="lockup">
+          <div class="brand">
+            <span class="mark" aria-hidden="true"></span>
+            Maxforge Lab
+          </div>
+          <p>The research-to-execution skill set for coding agents. Built for Claude Code and
+            other skill-aware harnesses.</p>
+        </div>
+        <div class="contact">
+          <span class="k">Start a conversation</span>
+          <a href="mailto:mancaf779@gmail.com">mancaf779@gmail.com</a>
+          <a href="https://github.com/mancaf779-boop/-Max-Geld-Generation">github.com/mancaf779-boop</a>
+        </div>
+        <div class="lic">
+          © 2026 Maxforge Lab · MIT License · Interoperates optionally with the Superpowers skill library.
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
