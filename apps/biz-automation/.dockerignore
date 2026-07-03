@@ -1,0 +1,8 @@
+.git
+node_modules
+reports
+*.log
+test
+n8n
+.claude
+DEPLOY.md

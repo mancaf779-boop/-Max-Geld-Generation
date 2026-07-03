@@ -1,0 +1,10 @@
+services:
+  biz-automation:
+    build: .
+    ports:
+      - "8080:8080"
+    environment:
+      PORT: "8080"
+      BIZ_AUTOMATION_API_KEY: ${BIZ_AUTOMATION_API_KEY:?set BIZ_AUTOMATION_API_KEY in .env or the shell environment}
+      REPORT_SCHEDULE_MS: ${REPORT_SCHEDULE_MS:-3600000}
+    restart: unless-stopped

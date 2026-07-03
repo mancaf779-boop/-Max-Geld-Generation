@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: biz-automation
+    runtime: docker
+    rootDir: apps/biz-automation
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /health
+    envVars:
+      - key: BIZ_AUTOMATION_API_KEY
+        sync: false   # set manually in the Render dashboard — never commit it
+      - key: REPORT_SCHEDULE_MS
+        value: "3600000"
