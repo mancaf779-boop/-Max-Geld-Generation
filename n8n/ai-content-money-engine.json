@@ -1,0 +1,261 @@
+{
+  "name": "AI Content Money Engine",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "days",
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "b1a1c111-1111-4111-8111-111111111111",
+      "name": "Daily Trigger (9am)",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -320,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1",
+              "name": "niche",
+              "value": "personal finance and side hustles",
+              "type": "string"
+            },
+            {
+              "id": "a2",
+              "name": "tone",
+              "value": "practical, motivating, no hype",
+              "type": "string"
+            },
+            {
+              "id": "a3",
+              "name": "platform",
+              "value": "X/Twitter and LinkedIn",
+              "type": "string"
+            },
+            {
+              "id": "a4",
+              "name": "affiliate_url",
+              "value": "https://your-affiliate-link.example/offer",
+              "type": "string"
+            },
+            {
+              "id": "a5",
+              "name": "topics",
+              "value": "How to start a side hustle with $0 | Budgeting apps that actually work | Passive income myths vs reality | Turning a skill into freelance income | Automating your savings | Reading a payslip and cutting waste | Beginner investing without fear | Negotiating a raise with data",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "c2a2c222-2222-4222-8222-222222222222",
+      "name": "Config",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -100,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Pick today's topic by rotating through the list, then build the prompt.\nconst cfg = $input.first().json;\nconst topics = String(cfg.topics || '').split('|').map(t => t.trim()).filter(Boolean);\nconst dayIndex = Math.floor(Date.now() / 86400000); // days since epoch\nconst topic = topics.length ? topics[dayIndex % topics.length] : 'a useful tip in your niche';\n\nconst prompt = `You are a content writer for the niche: ${cfg.niche}.\nTone: ${cfg.tone}. Target platforms: ${cfg.platform}.\nTopic for today: \"${topic}\".\n\nWrite original, non-generic content. Do NOT invent statistics or fake studies.\nIf you naturally reach a call-to-action, you may reference this link: ${cfg.affiliate_url}\n\nReturn ONLY valid minified JSON (no markdown, no code fences) with exactly these keys:\n{\"hook\":\"a scroll-stopping first line\",\"post\":\"a 120-220 word social post with line breaks\",\"hashtags\":\"5-8 relevant hashtags separated by spaces\",\"blog_intro\":\"a 2-3 sentence blog intro on the same topic\"}`;\n\nreturn [{ json: { topic, niche: cfg.niche, affiliate_url: cfg.affiliate_url, prompt } }];"
+      },
+      "id": "d3a3c333-3333-4333-8333-333333333333",
+      "name": "Pick Topic & Build Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        120,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.anthropic.com/v1/messages",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpHeaderAuth",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "anthropic-version",
+              "value": "2023-06-01"
+            },
+            {
+              "name": "content-type",
+              "value": "application/json"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: \"claude-opus-4-8\", max_tokens: 2000, messages: [ { role: \"user\", content: $json.prompt } ] }) }}",
+        "options": {}
+      },
+      "id": "e4a4c444-4444-4444-8444-444444444444",
+      "name": "Generate with Claude",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        340,
+        300
+      ],
+      "credentials": {
+        "httpHeaderAuth": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Anthropic API (x-api-key)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Claude's JSON reply into clean fields.\nconst res = $input.first().json;\nlet text = '';\ntry { text = res.content[0].text; } catch (e) { text = ''; }\n\n// Strip markdown code fences if the model added any.\ntext = text.trim().replace(/^```(?:json)?/i, '').replace(/```$/,'').trim();\n\nlet data;\ntry {\n  data = JSON.parse(text);\n} catch (e) {\n  // Fallback: keep the raw text so nothing is lost.\n  data = { hook: '', post: text, hashtags: '', blog_intro: '' };\n}\n\nconst topic = $('Pick Topic & Build Prompt').first().json.topic;\nconst date = new Date().toISOString().slice(0, 10);\n\nreturn [{ json: {\n  date,\n  topic,\n  hook: data.hook || '',\n  post: data.post || '',\n  hashtags: data.hashtags || '',\n  blog_intro: data.blog_intro || ''\n} }];"
+      },
+      "id": "f5a5c555-5555-4555-8555-555555555555",
+      "name": "Parse & Format",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        560,
+        300
+      ]
+    },
+    {
+      "parameters": {
+        "chatId": "REPLACE_WITH_YOUR_TELEGRAM_CHAT_ID",
+        "text": "=📅 {{ $json.date }} — *{{ $json.topic }}*\n\n{{ $json.hook }}\n\n{{ $json.post }}\n\n{{ $json.hashtags }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "a6a6c666-6666-4666-8666-666666666666",
+      "name": "Send Draft to Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        800,
+        180
+      ],
+      "credentials": {
+        "telegramApi": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Telegram Bot"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "REPLACE_WITH_GOOGLE_SHEET_ID",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Sheet1",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": []
+        },
+        "options": {}
+      },
+      "id": "b7a7c777-7777-4777-8777-777777777777",
+      "name": "Log to Google Sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.5,
+      "position": [
+        800,
+        420
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "REPLACE_WITH_CREDENTIAL_ID",
+          "name": "Google Sheets"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Daily Trigger (9am)": {
+      "main": [
+        [
+          {
+            "node": "Config",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Config": {
+      "main": [
+        [
+          {
+            "node": "Pick Topic & Build Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Pick Topic & Build Prompt": {
+      "main": [
+        [
+          {
+            "node": "Generate with Claude",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate with Claude": {
+      "main": [
+        [
+          {
+            "node": "Parse & Format",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Parse & Format": {
+      "main": [
+        [
+          {
+            "node": "Send Draft to Telegram",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Log to Google Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "pinData": {}
+}
