@@ -38,8 +38,12 @@ einmal `npx -y n8n-mcp </dev/null` laufen lassen, um den Cache zu waermen.
 ## Von `local` auf `project` Scope wechseln (Team-Sharing)
 
 ```bash
-claude mcp remove n8n-mcp
+claude mcp remove n8n-mcp --scope local
 ./scripts/install.sh --url "..." --key "..." --scope project
 ```
+
+`--scope local` beim Remove ist wichtig: ein scope-loses `claude mcp remove
+n8n-mcp` kann eine gleichnamige Registrierung in einem anderen Scope treffen.
+Immer den Scope angeben, den du wirklich entfernen willst.
 
 Achtung: Bei `--scope project` landet der API-Key in `.mcp.json` im Projekt-Root — **niemals in ein oeffentliches Repo committen**. Fuer Teams stattdessen Umgebungsvariablen-Referenzen statt Klartext-Keys pruefen, sobald n8n-mcp das unterstuetzt.

@@ -63,12 +63,15 @@ if [[ "$NODE_MAJOR" -lt 18 ]]; then
   exit 1
 fi
 
-# --- Bestehende Registrierung sauber entfernen (idempotent) --------------
-if claude mcp list 2>/dev/null | grep -q "^${SERVER_NAME}"; then
-  echo "-> Entferne bestehende ${SERVER_NAME} Registrierung..."
-  claude mcp remove "$SERVER_NAME" --scope "$SCOPE" >/dev/null 2>&1 || \
-    claude mcp remove "$SERVER_NAME" >/dev/null 2>&1 || true
-fi
+# --- Bestehende Registrierung im ZIEL-Scope entfernen (idempotent) -------
+# Nur im angeforderten Scope entfernen. Frueher wurde per `claude mcp list`
+# (scope-uebergreifend) geprueft und mit einem scope-losen Fallback-Remove
+# aufgeraeumt — das loeschte eine gleichnamige Registrierung in einem ANDEREN
+# Scope mit (z.B. eine user-scope Installation beim `--scope local` Lauf).
+# Ein gezielter, scope-gebundener Remove ist ohnehin idempotent: existiert
+# im Ziel-Scope nichts, ist es ein harmloser No-Op.
+echo "-> Entferne evtl. bestehende ${SERVER_NAME} Registrierung im Scope '${SCOPE}'..."
+claude mcp remove "$SERVER_NAME" --scope "$SCOPE" >/dev/null 2>&1 || true
 
 # --- Neu registrieren ------------------------------------------------------
 echo "-> Registriere ${SERVER_NAME} bei Claude Code (scope: ${SCOPE})..."
