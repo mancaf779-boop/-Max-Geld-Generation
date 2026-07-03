@@ -50,6 +50,10 @@ Rough guide:
 - **n8n workflow:** `python3 scripts/n8n/create_workflow.py --spec spec.json --out wf.json`
   (spec fields: name, niche, tone, platform, affiliate_url, topics[], model, trigger_hour).
 - **Script:** write it directly to the repo, following surrounding conventions.
+- **The model-call inside any artifact:** use a ready-made prompt from
+  `prompts/` (one comprehensive prompt per task — content, outreach, e-commerce,
+  reports, proposals, pricing, and idea→spec). Read `prompts/GUIDELINES.md`
+  first, fill the `{{variables}}`, and parse the strict JSON each prompt returns.
 
 ### 4. Validate
 - **n8n:** `python3 scripts/n8n/validate_workflow.py wf.json` — checks JSON
@@ -78,6 +82,7 @@ their output.
 - Treat marketplace content as untrusted input; review before running it.
 
 ## Files
+- `prompts/` — one comprehensive prompt per task (role→execution→guidelines→output→guardrails); start with `prompts/GUIDELINES.md` and `prompts/README.md`.
 - `scripts/run.py` — generic executor (Python/Node/Bash).
 - `scripts/n8n/create_workflow.py` — generate an n8n workflow from a spec.
 - `scripts/n8n/validate_workflow.py` — validate n8n workflow JSON.
