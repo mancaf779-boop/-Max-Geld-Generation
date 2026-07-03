@@ -22,6 +22,7 @@
  */
 const path = require("node:path");
 const fs = require("node:fs");
+const crypto = require("node:crypto");
 const { spawn } = require("node:child_process");
 
 const APP_ROOT = path.join(__dirname, "..", "..", "..");
@@ -89,9 +90,10 @@ function waitForHealth(port, timeoutMs) {
 async function runServer() {
   console.log("== server (full HTTP smoke test) ==");
   const port = 8901 + Math.floor(Math.random() * 500);
+  const apiKey = crypto.randomBytes(16).toString("hex");
   const child = spawn("node", ["src/server.js"], {
     cwd: APP_ROOT,
-    env: { ...process.env, PORT: String(port), REPORT_SCHEDULE_MS: "1200" },
+    env: { ...process.env, PORT: String(port), REPORT_SCHEDULE_MS: "1200", BIZ_AUTOMATION_API_KEY: apiKey },
     stdio: ["ignore", "pipe", "pipe"],
   });
   let out = "";
@@ -106,23 +108,27 @@ async function runServer() {
     const invoices = JSON.parse(fs.readFileSync(path.join(APP_ROOT, "data/sample-invoices.json"), "utf8"));
     const leads = JSON.parse(fs.readFileSync(path.join(APP_ROOT, "data/sample-leads.json"), "utf8"));
     const base = `http://localhost:${port}`;
+    const authHeaders = { "Content-Type": "application/json", "X-API-Key": apiKey };
 
-    const invResp = await (await fetch(`${base}/invoices/process`, { method: "POST", body: JSON.stringify(invoices), headers: { "Content-Type": "application/json" } })).json();
+    const unauthed = await fetch(`${base}/invoices/process`, { method: "POST", body: "{}", headers: { "Content-Type": "application/json" } });
+    check("request without X-API-Key is rejected with 401", unauthed.status === 401, `got ${unauthed.status}`);
+
+    const invResp = await (await fetch(`${base}/invoices/process`, { method: "POST", body: JSON.stringify(invoices), headers: authHeaders })).json();
     check("POST /invoices/process flags 4 of 5 rows", invResp.summary.flaggedCount === 4, JSON.stringify(invResp.summary));
 
-    const leadResp = await (await fetch(`${base}/leads/route`, { method: "POST", body: JSON.stringify(leads), headers: { "Content-Type": "application/json" } })).json();
+    const leadResp = await (await fetch(`${base}/leads/route`, { method: "POST", body: JSON.stringify(leads), headers: authHeaders })).json();
     check("POST /leads/route routes all 5 leads", leadResp.summary.totalLeads === 5);
 
     const combined = { invoiceSummary: invResp.summary, leadSummary: leadResp.summary, salesData: JSON.parse(fs.readFileSync(path.join(APP_ROOT, "data/sample-sources.json"), "utf8")).salesData };
-    const reportResp = await (await fetch(`${base}/reports/generate`, { method: "POST", body: JSON.stringify(combined), headers: { "Content-Type": "application/json" } })).json();
+    const reportResp = await (await fetch(`${base}/reports/generate`, { method: "POST", body: JSON.stringify(combined), headers: authHeaders })).json();
     check("POST /reports/generate chains invoice+lead+sales into one report", reportResp.markdown.includes("Invoices") && reportResp.markdown.includes("Leads") && reportResp.markdown.includes("Revenue trend"));
 
-    const before404 = await fetch(`${base}/reports/does-not-exist`);
+    const before404 = await fetch(`${base}/reports/does-not-exist`, { headers: authHeaders });
     check("unknown route returns 404", before404.status === 404);
 
     console.log("  waiting ~1.5s for the report scheduler to tick...");
     await new Promise((r) => setTimeout(r, 1500));
-    const latest = await (await fetch(`${base}/reports/latest`)).json();
+    const latest = await (await fetch(`${base}/reports/latest`, { headers: authHeaders })).json();
     check("scheduler populates /reports/latest on its own", Boolean(latest.generatedAt), JSON.stringify(latest));
   } finally {
     child.kill("SIGTERM");

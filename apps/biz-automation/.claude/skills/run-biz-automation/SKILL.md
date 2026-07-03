@@ -60,18 +60,25 @@ read those, not just the exit code, to see what was actually verified.
 
 ## Run (human path)
 
+Every route except `/health` requires an `X-API-Key` header matching
+`BIZ_AUTOMATION_API_KEY` — the server refuses to even start if that env var
+isn't set (fail-fast, no silent no-auth mode).
+
 ```bash
 cd apps/biz-automation
+export BIZ_AUTOMATION_API_KEY=$(openssl rand -hex 32)
 PORT=8080 node src/server.js
 # → "biz-automation listening on :8080". Ctrl-C to stop.
 
-curl -X POST localhost:8080/invoices/process -H 'Content-Type: application/json' -d @data/sample-invoices.json
-curl -X POST localhost:8080/leads/route -H 'Content-Type: application/json' -d @data/sample-leads.json
-curl -X POST localhost:8080/reports/generate -H 'Content-Type: application/json' -d '{}'   # falls back to data/sample-sources.json
-curl localhost:8080/reports/latest
+curl localhost:8080/health   # no key needed — health check stays open
+
+curl -X POST localhost:8080/invoices/process -H "X-API-Key: $BIZ_AUTOMATION_API_KEY" -H 'Content-Type: application/json' -d @data/sample-invoices.json
+curl -X POST localhost:8080/leads/route -H "X-API-Key: $BIZ_AUTOMATION_API_KEY" -H 'Content-Type: application/json' -d @data/sample-leads.json
+curl -X POST localhost:8080/reports/generate -H "X-API-Key: $BIZ_AUTOMATION_API_KEY" -H 'Content-Type: application/json' -d '{}'   # falls back to data/sample-sources.json
+curl localhost:8080/reports/latest -H "X-API-Key: $BIZ_AUTOMATION_API_KEY"
 
 # scheduled reports (writes data/../reports every REPORT_SCHEDULE_MS):
-REPORT_SCHEDULE_MS=3600000 PORT=8080 node src/server.js
+BIZ_AUTOMATION_API_KEY=$BIZ_AUTOMATION_API_KEY REPORT_SCHEDULE_MS=3600000 PORT=8080 node src/server.js
 
 # CLI, one-shot or on a schedule:
 node src/cli.js report                    # writes reports/report-<ts>.md, prints it
@@ -109,6 +116,15 @@ prove the app runs.
 - **`reports/` is gitignored** (`apps/*/reports/` in the repo-root
   `.gitignore`) — it's generated output from the CLI/scheduler, not source.
   Don't `git add -f` it back in.
+- **The server refuses to start without `BIZ_AUTOMATION_API_KEY` set** —
+  it's a deliberate fail-fast, not a bug. `driver.js server` generates a
+  random key per run and passes it via env + `X-API-Key` header itself, so
+  you don't need to set anything for the agent path. Only the human path
+  needs you to export it yourself.
+- **Only `/health` is unauthenticated.** Every other route — including
+  `/reports/latest`, which has no side effects — requires the key. This is
+  intentional: business data (invoice amounts, lead routing) shouldn't be
+  readable without the key just because the route is a GET.
 
 ## Troubleshooting
 
@@ -123,3 +139,10 @@ prove the app runs.
   with `ps aux | grep src/server.js` and kill it; the driver always kills
   its own child on exit, but a manually-backgrounded one won't clean
   itself up.
+- **`FATAL: BIZ_AUTOMATION_API_KEY is not set`** on startup: you forgot to
+  export it (human path) — see Run (human path) above. The driver doesn't
+  hit this because it sets the env var itself when spawning the server.
+- **`{"error":"unauthorized: missing or invalid X-API-Key header"}` (401)**:
+  either you didn't pass `-H "X-API-Key: ..."`, or the value doesn't match
+  `BIZ_AUTOMATION_API_KEY` exactly (it's an exact, case-sensitive,
+  constant-time compare — no partial matches).
