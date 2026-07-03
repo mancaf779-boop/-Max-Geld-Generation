@@ -1,0 +1,9 @@
+{
+  "leads": [
+    { "id": "LEAD-1", "source": "webform", "region": "US", "dealSize": 75000, "product": "Platform" },
+    { "id": "LEAD-2", "source": "referral", "region": "EU", "dealSize": 8000, "product": "Starter" },
+    { "id": "LEAD-3", "source": "webform", "region": "US", "dealSize": 1200, "product": "Starter" },
+    { "id": "LEAD-4", "source": "event", "region": "APAC", "dealSize": 60000, "product": "Platform" },
+    { "id": "LEAD-5", "source": "webform", "region": "EU", "dealSize": 3000, "product": "Starter" }
+  ]
+}

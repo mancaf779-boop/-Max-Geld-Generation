@@ -1,0 +1,48 @@
+{
+  "invoices": [
+    {
+      "id": "INV-1001",
+      "vendor": "Acme Supplies",
+      "amount": 420.5,
+      "dueDate": "2026-07-15",
+      "lineItems": [
+        { "desc": "Widgets", "qty": 10, "unitPrice": 30 },
+        { "desc": "Shipping", "qty": 1, "unitPrice": 120.5 }
+      ]
+    },
+    {
+      "id": "INV-1002",
+      "vendor": "Globex Logistics",
+      "amount": 15000,
+      "dueDate": "2026-07-20",
+      "lineItems": [
+        { "desc": "Freight", "qty": 1, "unitPrice": 15000 }
+      ]
+    },
+    {
+      "id": "INV-1003",
+      "vendor": "Initech Hardware",
+      "amount": 899.99,
+      "dueDate": "2026-07-10",
+      "lineItems": [
+        { "desc": "Servers", "qty": 1, "unitPrice": 750 }
+      ]
+    },
+    {
+      "id": "INV-1002",
+      "vendor": "Globex Logistics",
+      "amount": 15000,
+      "dueDate": "2026-07-20",
+      "lineItems": [
+        { "desc": "Freight", "qty": 1, "unitPrice": 15000 }
+      ]
+    },
+    {
+      "id": "INV-1004",
+      "vendor": "",
+      "amount": -50,
+      "dueDate": "2026-07-25",
+      "lineItems": []
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "salesData": [
+    { "month": "2026-02", "revenue": 82000 },
+    { "month": "2026-03", "revenue": 91000 },
+    { "month": "2026-04", "revenue": 87500 },
+    { "month": "2026-05", "revenue": 104000 },
+    { "month": "2026-06", "revenue": 118000 }
+  ]
+}
