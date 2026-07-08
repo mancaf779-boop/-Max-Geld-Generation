@@ -288,7 +288,7 @@
   .bar .lab{color:var(--ink-2)}
   .bar .track{height:26px;border-radius:5px;background:var(--panel-2);overflow:hidden;position:relative}
   .bar .fill{height:100%;border-radius:5px;width:var(--w);transition:width .9s cubic-bezier(.2,.7,.2,1)}
-  .bar .fill.cold{background:linear-gradient(90deg,#6b7681,#8b97a3)}
+  .bar .fill.cold{background:linear-gradient(90deg,var(--cold),#8b97a3)}
   .bar .fill.hot{background:linear-gradient(90deg,var(--quench),var(--quench-2))}
   .bar .val{text-align:right;font-weight:700;color:var(--ink)}
   .fire .note{font-size:13px;color:var(--ink-3);margin:0;font-family:var(--mono)}
@@ -426,7 +426,7 @@
           </div>
         </div>
 
-        <div class="stage" style="--sc:#c14a1e">
+        <div class="stage" style="--sc:var(--forge)">
           <div class="temp"><span class="dot"></span><span class="rail"></span><span class="deg">dull&nbsp;red</span></div>
           <div class="body">
             <h3>analyzing-data <em>02</em></h3>
@@ -477,7 +477,7 @@
           <div class="cnum">TOOL 01 · research</div>
           <h3>researching-topics</h3>
           <p class="when">Gather, evaluate, and synthesize before acting — literature reviews,
-            market scans, technical spikes, “look into X.”</p>
+            market scans, technical spikes, "look into X."</p>
           <div class="enforce"><span>What it enforces</span>
             Answer a specific question with evidence you can cite and defend — never a pile of tabs.
           </div>
@@ -499,7 +499,7 @@
           <p class="when">Turn a goal or a pile of findings into an ordered, executable plan a
             human or agent can run without further questions.</p>
           <div class="enforce"><span>What it enforces</span>
-            If a step needs you to explain it, rewrite the step. Every step has a testable “done.”
+            If a step needs you to explain it, rewrite the step. Every step has a testable "done."
           </div>
         </div>
 
@@ -604,14 +604,14 @@
       <div class="tiers">
         <div class="tier">
           <div class="th"><span class="name">Open</span><span class="hard">annealed</span></div>
-          <div class="heatgauge"><i style="width:34%;background:linear-gradient(90deg,#6b7681,#c14a1e)"></i></div>
+          <div class="heatgauge"><i style="width:34%;background:linear-gradient(90deg,var(--cold),var(--forge))"></i></div>
           <p class="desc">This toolkit: the four skills + bootstrap, docs, and eval. Free and MIT — use it, fork it, ship it.</p>
           <div class="who">For teams who want a tested starting point</div>
         </div>
 
         <div class="tier">
           <div class="th"><span class="name">Pro</span><span class="hard">tempered</span></div>
-          <div class="heatgauge"><i style="width:66%;background:linear-gradient(90deg,#c14a1e,var(--forge-2))"></i></div>
+          <div class="heatgauge"><i style="width:66%;background:linear-gradient(90deg,var(--forge),var(--forge-2))"></i></div>
           <p class="desc">A curated pack of domain-tuned skills + bootstrap, packaged and version-managed for your stack, with the eval harness to keep them honest as models change.</p>
           <div class="who">For businesses standardizing how agents work</div>
         </div>
