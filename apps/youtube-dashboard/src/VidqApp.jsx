@@ -428,8 +428,10 @@ function OptimizeScreen({ onBack }) {
   }
 
   function copy(text, id) {
-    navigator.clipboard?.writeText(text);
-    setCopied(id); setTimeout(() => setCopied(""), 1200);
+    if (!navigator.clipboard) return; // no clipboard (insecure context) → no false checkmark
+    navigator.clipboard.writeText(text).then(() => {
+      setCopied(id); setTimeout(() => setCopied(""), 1200);
+    }).catch(() => {});
   }
 
   return (
@@ -803,25 +805,27 @@ export default function MaxforgeLabApp() {
   const [liveStats, setLiveStats] = useState(null);
   const [liveChart, setLiveChart] = useState(null);
   const [loading, setLoading] = useState(false);
+  const requestSeq = useRef(0);
 
   async function loadLive(cfg) {
     if (!cfg.statsUrl && !cfg.chartUrl) return;
+    const seq = ++requestSeq.current; // ignore results from superseded calls
     setLoading(true);
     if (cfg.statsUrl) {
       try {
         const r = await fetch(cfg.statsUrl);
         const j = await r.json();
-        if (j && j.channel) setLiveStats(j);
+        if (seq === requestSeq.current && j && j.channel) setLiveStats(j);
       } catch (e) {}
     }
     if (cfg.chartUrl) {
       try {
         const r = await fetch(cfg.chartUrl);
         const j = await r.json();
-        if (Array.isArray(j)) setLiveChart(j);
+        if (seq === requestSeq.current && Array.isArray(j)) setLiveChart(j);
       } catch (e) {}
     }
-    setLoading(false);
+    if (seq === requestSeq.current) setLoading(false);
   }
 
   function saveConfig(cfg) {

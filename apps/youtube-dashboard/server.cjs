@@ -75,9 +75,9 @@ async function recentVideos(uploadsPlaylistId, n = 10) {
     id: v.id,
     title: v.snippet.title,
     publishedAt: v.snippet.publishedAt,
-    views: Number(v.statistics.viewCount || 0),
-    likes: Number(v.statistics.likeCount || 0),
-    comments: Number(v.statistics.commentCount || 0),
+    views: Number(v.statistics?.viewCount || 0),
+    likes: Number(v.statistics?.likeCount || 0),
+    comments: Number(v.statistics?.commentCount || 0),
     url: `https://youtube.com/watch?v=${v.id}`,
   }));
 }
@@ -135,22 +135,30 @@ function demoChart() {
 }
 
 // ---------- real daily views via the YouTube Analytics API ----------
-let accessToken = null, accessExp = 0;
+let accessToken = null, accessExp = 0, refreshPromise = null;
 async function getAccessToken() {
   if (accessToken && Date.now() < accessExp - 60_000) return accessToken;
-  const r = await fetch(YT_TOKEN_URL, {
-    method: "POST",
-    headers: { "content-type": "application/x-www-form-urlencoded" },
-    body: new URLSearchParams({
-      client_id: YT_CLIENT_ID, client_secret: YT_CLIENT_SECRET,
-      refresh_token: YT_REFRESH_TOKEN, grant_type: "refresh_token",
-    }),
-  });
-  const j = await r.json();
-  if (!r.ok || !j.access_token) throw new Error(`OAuth token: ${j.error_description || j.error || r.status}`);
-  accessToken = j.access_token;
-  accessExp = Date.now() + (Number(j.expires_in) || 3600) * 1000;
-  return accessToken;
+  if (refreshPromise) return refreshPromise; // coalesce concurrent refreshes
+  refreshPromise = (async () => {
+    try {
+      const r = await fetch(YT_TOKEN_URL, {
+        method: "POST",
+        headers: { "content-type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams({
+          client_id: YT_CLIENT_ID, client_secret: YT_CLIENT_SECRET,
+          refresh_token: YT_REFRESH_TOKEN, grant_type: "refresh_token",
+        }),
+      });
+      const j = await r.json();
+      if (!r.ok || !j.access_token) throw new Error(`OAuth token: ${j.error_description || j.error || r.status}`);
+      accessToken = j.access_token;
+      accessExp = Date.now() + (Number(j.expires_in) || 3600) * 1000;
+      return accessToken;
+    } finally {
+      refreshPromise = null;
+    }
+  })();
+  return refreshPromise;
 }
 
 const isoDate = (d) => d.toISOString().slice(0, 10);
@@ -168,10 +176,13 @@ async function dailyViews(days = 28) {
   const r = await fetch(url, { headers: { Authorization: `Bearer ${token}` } });
   const j = await r.json();
   if (!r.ok) throw new Error(`Analytics API ${r.status}: ${j?.error?.message || r.statusText}`);
-  const points = (j.rows || []).map(([day, views]) => {
-    const [, m, d] = day.split("-");
-    return { d: `${Number(m)}/${Number(d)}`, v: Number(views) };
-  });
+  const points = (j.rows || []).map((row) => {
+    if (!row || !row[0]) return null;
+    const parts = String(row[0]).split("-");
+    if (parts.length < 3) return null;
+    const [, m, d] = parts;
+    return { d: `${Number(m)}/${Number(d)}`, v: Number(row[1] || 0) };
+  }).filter(Boolean);
   // label only first + last (matches the dashboard's chart style)
   return points.map((p, i) => ({ ...p, d: i === 0 || i === points.length - 1 ? p.d : "" }));
 }
@@ -193,7 +204,10 @@ app.post("/api/claude", async (req, res) => {
   try {
     const b = req.body || {};
     const payload = {
-      model: ANTHROPIC_MODEL || b.model || "claude-opus-4-8",
+      // Model is server-controlled (ANTHROPIC_MODEL, default claude-opus-4-8);
+      // the client's model field is intentionally ignored so the deployment,
+      // not the browser, decides model/cost.
+      model: ANTHROPIC_MODEL,
       max_tokens: Math.min(Math.max(Number(b.max_tokens) || 1024, 1), 4096),
       messages: Array.isArray(b.messages) ? b.messages : [],
     };
@@ -218,7 +232,14 @@ let cache = null, cacheTime = 0;
 app.get("/api/stats", async (req, res) => {
   try {
     if (!LIVE) return res.json(demoStats());
-    if (!cache || Date.now() - cacheTime > 60_000) { cache = await liveStats(); cacheTime = Date.now(); }
+    if (!cache || Date.now() - cacheTime > 60_000) {
+      try {
+        cache = await liveStats(); cacheTime = Date.now();
+      } catch (e) {
+        if (!cache) throw e; // no cache to fall back on
+        console.error("stats refresh failed, serving stale cache:", e.message);
+      }
+    }
     res.json(cache);
   } catch (e) {
     res.status(500).json({ error: e.message });
@@ -233,7 +254,12 @@ app.get("/chart.json", async (req, res) => {
   if (!ANALYTICS_ENABLED) return res.json(LIVE ? [] : demoChart());
   try {
     if (!chartCache || Date.now() - chartCacheTime > 600_000) { // 10 min cache
-      chartCache = await dailyViews(28); chartCacheTime = Date.now();
+      try {
+        chartCache = await dailyViews(28); chartCacheTime = Date.now();
+      } catch (e) {
+        if (!chartCache) throw e; // no cache to fall back on
+        console.error("chart refresh failed, serving stale cache:", e.message);
+      }
     }
     res.json(chartCache);
   } catch (e) {
@@ -243,9 +269,13 @@ app.get("/chart.json", async (req, res) => {
 });
 
 app.use(express.static(path.join(__dirname, "dist")));
-// SPA fallback: any non-API route returns index.html
-app.get(/^(?!\/api\/|\/chart\.json).*/, (req, res) =>
-  res.sendFile(path.join(__dirname, "dist", "index.html")));
+// SPA fallback: non-API routes return index.html. But a path with a file
+// extension is a missing static asset — 404 it instead of returning HTML, so
+// the browser doesn't choke on "<" while parsing a would-be .js/.css.
+app.get(/^(?!\/api\/|\/chart\.json).*/, (req, res) => {
+  if (path.extname(req.path)) return res.status(404).end();
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
 
 app.listen(PORT, () => {
   console.log(`\n  Maxforge Lab  →  http://localhost:${PORT}`);
