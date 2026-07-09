@@ -1,0 +1,32 @@
+{
+  "name": "maxforge-youtube-dashboard",
+  "version": "1.3.0",
+  "private": true,
+  "description": "Maxforge Lab — YouTube growth dashboard (channel stats, trend keywords, AI coach, video optimizer). Vite + React front-end served by a self-contained Node server.",
+  "type": "module",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "start": "node server.cjs",
+    "serve": "vite build && node server.cjs",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "lucide-react": "^0.454.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "recharts": "^2.13.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "playwright-core": "^1.61.1",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "vite": "^5.4.11"
+  }
+}
