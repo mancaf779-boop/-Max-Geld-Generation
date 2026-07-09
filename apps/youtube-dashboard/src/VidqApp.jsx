@@ -554,7 +554,7 @@ function StatCard({ label, value }) {
 }
 
 function Dashboard({ openMenu, go, tab, setTab, stats, chart, loading, onRefresh }) {
-  const live = !!stats?.channel;
+  const live = !!stats?.channel && !stats?.demo;
   const subs = stats?.channel?.subscribers ?? 0;
   const views = stats?.channel?.views ?? 6;
   const videoCount = stats?.channel?.videoCount ?? 0;
@@ -808,7 +808,12 @@ export default function MaxforgeLabApp() {
   const requestSeq = useRef(0);
 
   async function loadLive(cfg) {
-    if (!cfg.statsUrl && !cfg.chartUrl) return;
+    if (!cfg.statsUrl && !cfg.chartUrl) {
+      // both sources cleared → drop stale data, fall back to demo
+      requestSeq.current++;
+      setLiveStats(null); setLiveChart(null);
+      return;
+    }
     const seq = ++requestSeq.current; // ignore results from superseded calls
     setLoading(true);
     if (cfg.statsUrl) {

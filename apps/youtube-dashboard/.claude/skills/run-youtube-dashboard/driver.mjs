@@ -34,7 +34,7 @@ function findChrome() {
   return p;
 }
 
-const URL = process.env.URL || "http://localhost:5173/";
+const URL = process.env.URL || "http://localhost:3000/";
 const OUT = process.argv[2] || "shot.png";
 const clicks = process.argv.slice(3);
 

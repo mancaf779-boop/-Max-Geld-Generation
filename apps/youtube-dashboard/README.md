@@ -81,6 +81,29 @@ of the app works normally.
 | `ANTHROPIC_BASE_URL` | `…/v1/messages` | Anthropic endpoint override (gateway/proxy). |
 | `YT_OAUTH_CLIENT_ID` / `_SECRET` / `_REFRESH_TOKEN` | — | Enable the live daily-views chart (YouTube Analytics OAuth). |
 | `YOUTUBE_BASE_URL`, `YT_OAUTH_TOKEN_URL`, `YT_ANALYTICS_BASE_URL` | Google endpoints | Upstream overrides (proxy/testing). |
+| `CORS_ORIGIN` | — | Allow a specific cross-origin front-end. Unset = same-origin only. |
+| `RATE_LIMIT_PER_MIN` | `60` | Per-IP limit on `/api/claude`, `/api/stats`, `/chart.json`. `0` disables. |
+
+Env vars can be set in the shell **or** in a `.env` file next to `server.cjs`
+(copy `.env.example` → `.env`). Real shell variables take precedence over the file.
+
+## Deployment & security
+
+The data/AI endpoints are **not authenticated** — by design the browser calls
+them without a secret. That's fine on `localhost`, but before exposing an
+instance publicly, be aware:
+
+- **`/api/claude`** forwards requests to Anthropic with your server key. Anyone
+  who can reach it can spend your credits/quota (CORS does not stop non-browser
+  clients).
+- **`/chart.json` / `/api/stats`** return owner-only YouTube data once the live
+  env vars are set.
+
+Built-in mitigations: no wildcard CORS (same-origin by default; opt in with
+`CORS_ORIGIN`) and a per-IP rate limit (`RATE_LIMIT_PER_MIN`). These are
+defense-in-depth, **not** authentication. For a public deployment, put the app
+behind your own auth (reverse proxy / SSO / a network boundary) or keep it bound
+to localhost. Only enable the live/AI env vars once it's protected.
 
 ## API (served on the same origin)
 

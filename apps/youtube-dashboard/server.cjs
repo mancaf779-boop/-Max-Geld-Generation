@@ -17,7 +17,31 @@
  * Node 18+ (uses global fetch). Run:  npm install && npm start
  */
 const path = require("path");
+const fs = require("fs");
 const express = require("express");
+
+// Minimal .env loader (no dependency): load KEY=value lines from a .env next to
+// this file so the documented `cp .env.example .env` setup works with a plain
+// `npm start`. Real environment variables always win over the file.
+(function loadDotEnv() {
+  try {
+    const file = path.join(__dirname, ".env");
+    if (!fs.existsSync(file)) return;
+    for (const raw of fs.readFileSync(file, "utf8").split("\n")) {
+      const line = raw.trim();
+      if (!line || line.startsWith("#")) continue;
+      const eq = line.indexOf("=");
+      if (eq === -1) continue;
+      const key = line.slice(0, eq).trim();
+      if (key in process.env) continue; // don't override real env
+      let val = line.slice(eq + 1).trim();
+      if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+        val = val.slice(1, -1);
+      }
+      process.env[key] = val;
+    }
+  } catch (e) { /* ignore malformed .env */ }
+})();
 
 const PORT = process.env.PORT || 3000;
 const API_KEY = process.env.YOUTUBE_API_KEY || "";
@@ -42,6 +66,15 @@ const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY || "";
 const ANTHROPIC_URL = process.env.ANTHROPIC_BASE_URL || "https://api.anthropic.com/v1/messages";
 const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || "claude-opus-4-8";
 const AI_ENABLED = Boolean(ANTHROPIC_API_KEY);
+
+// ---------- access control ----------
+// The app is served same-origin, so no CORS header is needed by default. Set
+// CORS_ORIGIN to expose the APIs to a specific cross-origin front-end.
+const CORS_ORIGIN = process.env.CORS_ORIGIN || "";
+// Per-IP rate limit for the credit/quota-spending routes (/api/claude and the
+// live-data routes). Defense-in-depth — NOT a substitute for real auth on a
+// public deployment (see README → Deployment & security). 0 disables it.
+const RATE_LIMIT_PER_MIN = Number(process.env.RATE_LIMIT_PER_MIN || 60);
 
 // ---------- real YouTube Data API ----------
 async function api(pathname, params) {
@@ -112,6 +145,7 @@ const DEMO_TITLES = [
 function demoStats() {
   const base = Date.now();
   return {
+    demo: true, // let the UI show "Demo-Daten" instead of "Live-Daten"
     fetchedAt: new Date().toISOString(),
     channel: {
       id: "UC_demo", title: "Maxforge Lab Demo", handle: "@maxforgelab", thumbnail: null,
@@ -189,13 +223,45 @@ async function dailyViews(days = 28) {
 
 // ---------- server ----------
 const app = express();
-app.use((req, res, next) => { res.set("Access-Control-Allow-Origin", "*"); next(); });
+// Same-origin by default (no CORS header). Opt into a specific cross-origin
+// front-end with CORS_ORIGIN — never a blanket "*", which would let any site
+// read the owner-only live stats/analytics from a deployed instance.
+if (CORS_ORIGIN) {
+  app.use((req, res, next) => {
+    res.set("Access-Control-Allow-Origin", CORS_ORIGIN);
+    res.set("Vary", "Origin");
+    next();
+  });
+}
 app.use(express.json({ limit: "1mb" }));
+
+// Simple in-memory per-IP rate limiter for the credit/quota-spending routes.
+// Defense-in-depth only — see README → Deployment & security for real auth.
+const hits = new Map();
+function rateLimit(req, res, next) {
+  if (RATE_LIMIT_PER_MIN <= 0) return next();
+  const ip = req.ip || req.socket.remoteAddress || "unknown";
+  const now = Date.now();
+  const rec = hits.get(ip);
+  if (!rec || now > rec.reset) {
+    hits.set(ip, { count: 1, reset: now + 60_000 });
+  } else if (rec.count >= RATE_LIMIT_PER_MIN) {
+    return res.status(429).json({ error: { message: "Rate limit exceeded — try again shortly." } });
+  } else {
+    rec.count++;
+  }
+  next();
+}
+// bound the map so it can't grow unbounded under many distinct IPs
+setInterval(() => {
+  const now = Date.now();
+  for (const [ip, rec] of hits) if (now > rec.reset) hits.delete(ip);
+}, 300_000).unref?.();
 
 // AI proxy: the browser posts {model, max_tokens, system, messages} here; the
 // server adds the API key + version headers and forwards to Anthropic. Keeps the
 // key server-side and avoids the browser-CORS block on api.anthropic.com.
-app.post("/api/claude", async (req, res) => {
+app.post("/api/claude", rateLimit, async (req, res) => {
   if (!AI_ENABLED) {
     return res.status(503).json({
       error: { message: "AI features disabled — set ANTHROPIC_API_KEY on the server to enable." },
@@ -229,7 +295,7 @@ app.post("/api/claude", async (req, res) => {
 });
 
 let cache = null, cacheTime = 0;
-app.get("/api/stats", async (req, res) => {
+app.get("/api/stats", rateLimit, async (req, res) => {
   try {
     if (!LIVE) return res.json(demoStats());
     if (!cache || Date.now() - cacheTime > 60_000) {
@@ -250,7 +316,7 @@ app.get("/api/stats", async (req, res) => {
 // points in demo mode, or an empty array in live mode (the app hides the chart
 // rather than show fake numbers next to real stats).
 let chartCache = null, chartCacheTime = 0;
-app.get("/chart.json", async (req, res) => {
+app.get("/chart.json", rateLimit, async (req, res) => {
   if (!ANALYTICS_ENABLED) return res.json(LIVE ? [] : demoChart());
   try {
     if (!chartCache || Date.now() - chartCacheTime > 600_000) { // 10 min cache

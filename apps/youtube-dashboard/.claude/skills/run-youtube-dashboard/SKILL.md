@@ -1,26 +1,26 @@
 ---
 name: run-youtube-dashboard
-description: Build, run, and screenshot the Maxforge Lab YouTube dashboard — a Vite + React mobile YouTube-analytics dashboard with an optional Node/Express stats backend. Use when asked to run, start, launch, serve, drive, or screenshot the app, or to verify a change renders (dashboard, live data, AI Coach, keywords, optimize, settings screens).
+description: Build, run, and screenshot the Maxforge Lab YouTube dashboard — a Vite + React mobile YouTube-analytics dashboard served by a self-contained Node server. Use when asked to run, start, launch, serve, drive, or screenshot the app, or to verify a change renders (dashboard, live data, AI Coach, keywords, optimize, settings screens).
 ---
 
 # Run the Maxforge Lab YouTube dashboard
 
-Maxforge Lab (this app) is a **Vite + React single-page app** (mobile-shaped dashboard, German UI,
-Tailwind + Recharts + lucide-react). It runs headless and is driven with the
-pre-installed Playwright Chromium via **`.claude/skills/run-youtube-dashboard/driver.mjs`**,
-which loads the app, optionally clicks on-screen labels, screenshots, and reports
-console errors.
+A **Vite + React single-page app** (mobile-shaped dashboard, German UI, Tailwind
++ Recharts + lucide-react), built to static files and served — together with its
+data/AI APIs — by one self-contained Node server (`server.cjs`). It runs headless
+and is driven with the pre-installed Playwright Chromium via
+**`.claude/skills/run-youtube-dashboard/driver.mjs`**, which loads the app,
+optionally clicks on-screen labels, screenshots, and reports console errors.
 
 The dashboard has two data modes:
-- **Demo-Daten** — hardcoded sample numbers (no backend). This is the default
-  when no data source is reachable.
-- **Live-Daten** — fetched from a backend exposing `/api/stats` (channel stats)
-  and optionally `/chart.json` (daily views). `backend/mock-server.cjs` serves
-  that exact contract for local runs; `backend/youtube-stats.cjs` serves the
-  real thing with a YouTube API key.
+- **Demo-Daten** — sample numbers served by `server.cjs` when no credentials are
+  set. This is the default; `/api/stats` returns `{ demo: true, ... }`.
+- **Live-Daten** — real data when the YouTube / Anthropic env vars are set (see
+  below). `/api/stats` (channel), `/chart.json` (daily views), `/api/claude`
+  (AI proxy) are all served by the same process, same origin.
 
-**All paths below are relative to the app project root (`apps/youtube-dashboard/`).** The driver's
-full path from there is `.claude/skills/run-youtube-dashboard/driver.mjs`.
+**All paths below are relative to the app project root (`apps/youtube-dashboard/`).**
+The driver's full path from there is `.claude/skills/run-youtube-dashboard/driver.mjs`.
 
 ## Prerequisites
 
@@ -32,113 +32,112 @@ full path from there is `.claude/skills/run-youtube-dashboard/driver.mjs`.
 ## Setup
 
 ```bash
-npm install          # installs react, recharts, lucide-react, vite,
-                     # playwright-core (driver), express + googleapis (backend)
+npm install     # react, recharts, lucide-react, vite, express, playwright-core (driver)
 ```
 
 ## Run (agent path)
 
-Three steps: start the backend, start the app, drive it. Start both servers in
-the background.
+One server hosts the built app + APIs on `:3000`. Build, launch in the
+background, then drive.
 
 ```bash
-# 1) Backend — mock (no credentials). Serves /api/stats + /chart.json on :3000.
-node backend/mock-server.cjs        # run in background
+# 1) Build + serve (= vite build && node server.cjs) on :3000
+npm run serve                      # run in background
+#   (or, if dist is already built: node server.cjs)
 
-# 2) App — Vite dev server on :5173. Reads VITE_STATS_URL/VITE_CHART_URL from .env
-#    and auto-connects to the backend on load.
-npm run dev                         # run in background
-
-# 3) Drive it — screenshot the home dashboard (should show "Live-Daten · 42 Videos")
+# 2) Drive it — screenshot the home dashboard
 node .claude/skills/run-youtube-dashboard/driver.mjs home.png
 ```
 
-Verify the servers are up before driving:
+Verify the server is up before driving:
 
 ```bash
-curl -s -o /dev/null -w "vite %{http_code}\n" http://localhost:5173/      # 200
-curl -s -o /dev/null -w "mock %{http_code}\n" http://localhost:3000/api/stats  # 200
+curl -s -o /dev/null -w "app %{http_code}\n" http://localhost:3000/            # 200
+curl -s -o /dev/null -w "stats %{http_code}\n" http://localhost:3000/api/stats # 200
 ```
 
 **Driver usage:** `node .claude/skills/run-youtube-dashboard/driver.mjs <out.png> [clickLabel ...]`
 Each `clickLabel` is on-screen text on a tab/button; the driver clicks them in
 order before screenshotting. Prefix with `css=` to target by CSS selector
-instead (for icon-only buttons). Screenshots land wherever you point `<out.png>`.
+instead (for icon-only buttons). The driver targets `http://localhost:3000/` by
+default; override with `URL=…`. Screenshots land wherever you point `<out.png>`.
 
 ```bash
-node .claude/skills/run-youtube-dashboard/driver.mjs analytik.png "Analytik"   # live stats + channel-views chart + recent videos
+node .claude/skills/run-youtube-dashboard/driver.mjs analytik.png "Analytik"  # analytics tiles + channel-views chart
 node .claude/skills/run-youtube-dashboard/driver.mjs alle.png "Alle"          # all dashboard sections at once
-# Settings/Datenquelle: reach it via the gear icon (the "Datenquelle verbinden"
-# text link only exists in Demo mode, so target the gear button by CSS):
+# Settings/Datenquelle: reach it via the gear icon (target the button by CSS):
 node .claude/skills/run-youtube-dashboard/driver.mjs settings.png "css=button:has(svg.lucide-settings)"
 ```
 
-The driver prints `console errors: none` on a clean render. **Read the PNG** —
-a blank frame or Demo-Daten badge when you expected Live-Daten is a failure.
+The driver prints `console errors: none` on a clean render. **Read the PNG** — a
+blank frame is a failure to launch.
 
-### Real YouTube data instead of the mock
+### Live data (optional)
 
-Same `/api/stats` contract, so it's a drop-in for the mock backend:
+All same-origin on the one server; set env vars and restart:
 
 ```bash
-export YOUTUBE_API_KEY="your_key"   # Google Cloud → enable "YouTube Data API v3" → API key
-node backend/youtube-stats.cjs @yourhandle --serve   # serves :3000, no app change needed
+# Channel stats (dashboard flips to Live-Daten):
+export YOUTUBE_API_KEY="your_key"   # Google Cloud → "YouTube Data API v3" → API key
+export MAXFORGE_CHANNEL="@yourhandle"
+
+# AI screens (AI Coach / Keywords / Optimize) via the server-side proxy:
+export ANTHROPIC_API_KEY="sk-ant-..."
+
+# Daily-views chart (Analytik tab) via YouTube Analytics OAuth:
+YT_OAUTH_CLIENT_ID=x YT_OAUTH_CLIENT_SECRET=y node get-analytics-token.cjs  # one-time
+export YT_OAUTH_CLIENT_ID=x YT_OAUTH_CLIENT_SECRET=y YT_OAUTH_REFRESH_TOKEN=z
+
+npm run serve   # banner shows which of data / chart / AI are LIVE
 ```
 
-Daily-views `chart.json` comes from `backend/youtube-analytics.cjs`, which needs
-an OAuth consent flow (`client_secret.json`) — see the header comment in that file.
+For verification without real credentials, the upstreams are override-able via
+`YOUTUBE_BASE_URL`, `YT_OAUTH_TOKEN_URL`, `YT_ANALYTICS_BASE_URL`, and
+`ANTHROPIC_BASE_URL` — point them at a local mock returning the same shapes.
 
 ## Run (human path)
 
-`npm run dev`, open `http://localhost:5173/` in a browser, Ctrl-C to stop. With
-`backend/mock-server.cjs` also running it shows Live-Daten; otherwise Demo-Daten.
-Useless headless — use the agent path above.
+`npm run serve`, open `http://localhost:3000/`, Ctrl-C to stop. Useless
+headless — use the agent path above. For front-end hot reload use `npm run dev`
+(Vite on `:5173`, which proxies `/api` and `/chart.json` to a `server.cjs`
+running on `:3000`).
 
 ## Gotchas
 
-- **Backend scripts are `.cjs`, not `.js`.** `package.json` has
-  `"type": "module"` (Vite needs it), which makes Node treat `.js` as ESM and
-  the `require(...)`-based backend scripts fail with *"require is not defined in
-  ES module scope."* They were renamed to `.cjs` to stay CommonJS.
-- **Config persistence needed a `localStorage` fallback.** The app's `store`
-  helper originally only used `window.storage`, which exists **only inside the
-  Anthropic artifact host** — in a normal browser it's `undefined`, so the
-  Datenquelle settings never persisted and the app was stuck in Demo-Daten. A
-  `localStorage` fallback was added in `src/VidqApp.jsx`.
-- **`.env` is read only at Vite startup.** `VITE_STATS_URL` / `VITE_CHART_URL`
-  drive the auto-connect. If you change `.env`, restart `npm run dev`.
-- **Backend must be up *before* the app loads** to get Live-Daten. The fetch
-  failure is caught and swallowed (falls back to Demo-Daten silently). If you
-  start the backend late, click the refresh (↻) icon in the app header, or just
-  re-run the driver.
-- **The "Datenquelle verbinden" text link is Demo-mode only.** In Live-Daten
-  mode the home screen shows the green "Live-Daten" badge in its place, so to
-  reach Settings you must click the **gear icon** — target it by CSS:
-  `css=button:has(svg.lucide-settings)`. (lucide-react renders icons as
-  `svg.lucide-<name>`.)
-- **CORS is already handled** — both backends send `Access-Control-Allow-Origin: *`,
-  so `:5173 → :3000` works.
+- **One server, same origin.** The built app and all APIs are served by
+  `server.cjs` on `:3000` — no separate backend, and no CORS needed by default
+  (a blanket `Access-Control-Allow-Origin: *` was intentionally removed; set
+  `CORS_ORIGIN` only for a specific cross-origin front-end).
+- **`server.cjs` / `get-analytics-token.cjs` are `.cjs`.** `package.json` has
+  `"type": "module"` (Vite needs it), which makes Node treat `.js` as ESM; the
+  `require(...)`-based server stays `.cjs` to remain CommonJS.
+- **Demo vs Live badge.** `/api/stats` demo responses carry `demo: true`; the UI
+  keys the "Live-Daten"/"Demo-Daten" badge off that, not just channel presence.
+- **Config persistence uses a `localStorage` fallback.** The `store` helper
+  prefers the artifact-host `window.storage` but falls back to `localStorage` in
+  a normal browser, so the Datenquelle settings persist.
+- **Settings via the gear icon.** The "Datenquelle verbinden" text link only
+  shows in Demo mode; in Live mode target the gear button by CSS:
+  `css=button:has(svg.lucide-settings)` (lucide renders `svg.lucide-<name>`).
 - **Chromium path is versioned** (`chromium-1194` today). The driver globs
   `/opt/pw-browsers/chromium-*/chrome-linux/chrome`; don't hardcode the revision.
-- **The `/favicon.ico` 404** was silenced by adding an inline SVG icon in
-  `index.html`. Chromium's console text for it is a generic
-  *"Failed to load resource… 404"* with no URL, so it can't be filtered by name.
-- **AI Coach / Schlüsselwörter / Optimieren call `api.anthropic.com` directly**
-  from the browser. They need an API key and hit CORS, so they don't function in
-  a local run — but their screens render fine. Don't treat their failure as a
-  broken build.
+- **`/favicon.ico`** is an inline SVG in `index.html` (no 404 noise).
+- **AI screens need `ANTHROPIC_API_KEY`.** Without it, `/api/claude` returns a
+  friendly 503 and those screens show a "disabled" message — their UI still
+  renders, so don't treat that as a broken build.
 
 ## Troubleshooting
 
-- **App shows "Demo-Daten — Datenquelle verbinden" instead of live numbers** →
-  backend not reachable. Check `curl http://localhost:3000/api/stats` returns
-  JSON with a `channel` object; confirm `.env` points at it; restart `npm run dev`
-  if you edited `.env`.
-- **`require is not defined in ES module scope`** when starting a backend script
-  → you're running a `.js` copy. Use the `.cjs` files in `backend/`.
+- **App shows "Demo-Daten" when you expected live** → the relevant env vars
+  aren't set, or the server was started before they were exported. Check the
+  startup banner (`data source` / `daily chart` / `AI features`) and
+  `curl http://localhost:3000/api/stats` (live responses have no `demo` flag).
+- **`require is not defined in ES module scope`** → you renamed `server.cjs` to
+  `.js`; it must stay `.cjs` under `"type": "module"`.
+- **`429` from `/api/claude` or `/api/stats`** → the per-IP rate limiter
+  (`RATE_LIMIT_PER_MIN`, default 60). Raise it or set `RATE_LIMIT_PER_MIN=0` to
+  disable for local testing.
 - **Driver: `Chromium not found under /opt/pw-browsers`** → the pre-installed
-  browser is missing/moved; check `ls /opt/pw-browsers` and
-  `echo $PLAYWRIGHT_BROWSERS_PATH`.
-- **Driver: `click "X" failed`** → the label text isn't on the current screen
-  (e.g. clicking "Analytik" but the tab row scrolled). The driver still
-  screenshots; open the PNG to see the actual state.
+  browser moved; check `ls /opt/pw-browsers` and `echo $PLAYWRIGHT_BROWSERS_PATH`.
+- **Driver: `click "X" failed`** → the label isn't on the current screen. The
+  driver still screenshots; open the PNG to see the actual state.
