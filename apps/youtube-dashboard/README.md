@@ -29,6 +29,21 @@ it proxies data from a running `npm start` server or falls back to demo data.
 Out of the box the dashboard runs in **demo mode** with sample numbers. Set the
 env vars below to switch on live data and the AI screens.
 
+## Docker
+
+A multi-stage `Dockerfile` builds the front-end and serves it (plus the APIs)
+from the runtime image; it runs as a non-root user and includes a healthcheck.
+
+```bash
+docker build -t maxforge-lab .
+docker run --rm -p 3000:3000 maxforge-lab                  # demo mode
+docker run --rm -p 3000:3000 --env-file .env maxforge-lab  # live data / AI (see .env.example)
+docker run --rm -p 8080:8080 -e PORT=8080 maxforge-lab     # custom port
+```
+
+Then open **http://localhost:3000**. Pass any of the env vars from the
+Configuration table via `-e` / `--env-file`.
+
 ## Live YouTube data
 
 ```bash
@@ -124,6 +139,7 @@ apps/youtube-dashboard/
   .env.production          # build-time API paths (relative, same-origin)
   server.cjs               # static host + stats / chart / AI proxy
   get-analytics-token.cjs  # one-time OAuth helper for the daily-views chart
+  Dockerfile               # multi-stage build → non-root runtime image (+ .dockerignore)
   .claude/skills/run-youtube-dashboard/   # skill to launch + screenshot the app
 ```
 
