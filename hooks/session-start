@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-<<<<<<< HEAD
 # SessionStart hook for the maxforge-lab plugin.
 # Injects the using-maxforge bootstrap so skills reliably auto-trigger.
 
@@ -11,22 +10,6 @@ PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 using_maxforge_content=$(cat "${PLUGIN_ROOT}/skills/using-maxforge/SKILL.md" 2>&1 || echo "Error reading using-maxforge skill")
 
 # Escape for JSON embedding (single-pass parameter substitutions).
-=======
-# SessionStart hook for superpowers plugin
-
-set -euo pipefail
-
-# Determine plugin root directory
-SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-PLUGIN_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
-
-# Read using-superpowers content
-using_superpowers_content=$(cat "${PLUGIN_ROOT}/skills/using-superpowers/SKILL.md" 2>&1 || echo "Error reading using-superpowers skill")
-
-# Escape string for JSON embedding using bash parameter substitution.
-# Each ${s//old/new} is a single C-level pass - orders of magnitude
-# faster than the character-by-character loop this replaces.
->>>>>>> 3548a5c... Add Superpowers skills for Claude Code
 escape_for_json() {
     local s="$1"
     s="${s//\\/\\\\}"
@@ -37,7 +20,6 @@ escape_for_json() {
     printf '%s' "$s"
 }
 
-<<<<<<< HEAD
 using_maxforge_escaped=$(escape_for_json "$using_maxforge_content")
 session_context="<EXTREMELY_IMPORTANT>\nYou have Maxforge Lab skills.\n\n**Below is the full content of your 'maxforge-lab:using-maxforge' skill - your introduction to using skills. For all other skills, use the 'Skill' tool:**\n\n${using_maxforge_escaped}\n</EXTREMELY_IMPORTANT>"
 
@@ -48,28 +30,6 @@ if [ -n "${CURSOR_PLUGIN_ROOT:-}" ]; then
 elif [ -n "${CLAUDE_PLUGIN_ROOT:-}" ] && [ -z "${COPILOT_CLI:-}" ]; then
   printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$session_context" | cat
 else
-=======
-using_superpowers_escaped=$(escape_for_json "$using_superpowers_content")
-session_context="<EXTREMELY_IMPORTANT>\nYou have superpowers.\n\n**Below is the full content of your 'superpowers:using-superpowers' skill - your introduction to using skills. For all other skills, use the 'Skill' tool:**\n\n${using_superpowers_escaped}\n</EXTREMELY_IMPORTANT>"
-
-# Output context injection as JSON.
-# Cursor hooks expect additional_context (snake_case).
-# Claude Code hooks expect hookSpecificOutput.additionalContext (nested).
-# Copilot CLI (v1.0.11+) and others expect additionalContext (top-level, SDK standard).
-# Claude Code reads BOTH additional_context and hookSpecificOutput without
-# deduplication, so we must emit only the field the current platform consumes.
-#
-# Uses printf instead of heredoc to work around bash 5.3+ heredoc hang.
-# See: https://github.com/obra/superpowers/issues/571
-if [ -n "${CURSOR_PLUGIN_ROOT:-}" ]; then
-  # Cursor sets CURSOR_PLUGIN_ROOT (may also set CLAUDE_PLUGIN_ROOT)
-  printf '{\n  "additional_context": "%s"\n}\n' "$session_context" | cat
-elif [ -n "${CLAUDE_PLUGIN_ROOT:-}" ] && [ -z "${COPILOT_CLI:-}" ]; then
-  # Claude Code sets CLAUDE_PLUGIN_ROOT without COPILOT_CLI
-  printf '{\n  "hookSpecificOutput": {\n    "hookEventName": "SessionStart",\n    "additionalContext": "%s"\n  }\n}\n' "$session_context" | cat
-else
-  # Copilot CLI (sets COPILOT_CLI=1) or unknown platform — SDK standard format
->>>>>>> 3548a5c... Add Superpowers skills for Claude Code
   printf '{\n  "additionalContext": "%s"\n}\n' "$session_context" | cat
 fi
 
